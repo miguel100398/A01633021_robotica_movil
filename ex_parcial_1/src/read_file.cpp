@@ -37,7 +37,8 @@ bool write_file(std::string file_name, double *array_to_write){
 
     //Write arrray to file
     for (int idx=0; idx<ARR_SIZE; idx++){
-        wr_file << std::to_string(array_to_write[idx]) << "\n";
+        
+        wr_file <<  std::setprecision(PRINT_PRECISION) << array_to_write[idx] << "\n";
     }
 
     return true;
