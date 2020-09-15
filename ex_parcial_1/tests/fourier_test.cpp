@@ -26,13 +26,13 @@ int main(){
     std::string file_y = "accelerometer_y.txt";
     std::string file_z = "accelerometer_z.txt";
     //Files to write fourier magnitude
-    std::string file_magnitude_x = "magnitude_x.txt";
-    std::string file_magnitude_y = "magnitude_y.txt";
-    std::string file_magnitude_z = "magnitude_z.txt";
+    std::string file_magnitude_x = "data/magnitude_x.txt";
+    std::string file_magnitude_y = "data/magnitude_y.txt";
+    std::string file_magnitude_z = "data/magnitude_z.txt";
     //Files to write fourier phase
-    std::string file_phase_x = "phase_x.txt";
-    std::string file_phase_y = "phase_y.txt";
-    std::string file_phase_z = "phase_z.txt";
+    std::string file_phase_x = "data/phase_x.txt";
+    std::string file_phase_y = "data/phase_y.txt";
+    std::string file_phase_z = "data/phase_z.txt";
 
     std::cout << "Init fourier_test\n";
 

@@ -4,10 +4,11 @@
 #include "../includes/fourier.hpp"
 
 bool discrete_fourier_transform(double *input_arr, std::complex<double> *output_arr, unsigned int size){
+    const std::complex<double> i(0.0,1.0);          //sqr(-1)=i
     for (int idx_k=0; idx_k<size; idx_k++){
         output_arr[idx_k] = 0;
         for (int idx_n=0; idx_n<size; idx_n++){
-            output_arr[idx_k] += input_arr[idx_n] * ( (cos((2*idx_k*idx_n*M_PI)/size ) ) - ((double)1i*sin((2*idx_k*idx_n*M_PI)/size) ) );
+            output_arr[idx_k] += input_arr[idx_n] * ( (cos((2*idx_k*idx_n*M_PI)/size ) ) - (i*sin((2*idx_k*idx_n*M_PI)/size) ) );
         }
     }
     return true;
