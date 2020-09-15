@@ -12,3 +12,7 @@ src/read_file.cpp
 src/fourier.cpp
 tests/fourier_test.cpp)
 
+add_executable(build/convolution_test_exe 
+src/convolution.cpp
+tests/convolution_test.cpp)
+
