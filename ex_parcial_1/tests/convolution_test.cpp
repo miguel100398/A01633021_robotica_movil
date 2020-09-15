@@ -5,15 +5,17 @@
 #include <iostream>
 #include <unistd.h>
 
-#define size 5
+#define size 10
 
 int main(){
-    double signal[size] = {1,1,1,1,1};
-    double filter[size] = {1,1,1,1,1};  //Two box signals to test convolution
+    double signal[size];
+    double filter[size];  //Two box signals to test convolution
     double result[(size*2)-1];
+    //Two box signals to test convolution
+    for
 
     std::cout << "Init convolution_test\n";
-    std::cout << "Starting convolution <'n";
+    std::cout << "Starting convolution \n";
     if (!conv(signal, filter, result, size)){
         std::cout << "Can´t convolve signal \n";
         return 1;
