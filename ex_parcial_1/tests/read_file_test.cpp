@@ -7,12 +7,12 @@ int main(){
     double arr_x[ARR_SIZE];
     double arr_y[ARR_SIZE];
     double arr_z[ARR_SIZE];
-    std::string file_x = "accelerometer_x.txt";
-    std::string file_y = "accelerometer_y.txt";
-    std::string file_z = "accelerometer_z.txt";
-    std::string write_x = "write_x.txt";
-    std::string write_y = "write_y.txt";
-    std::string write_z = "write_z.txt";
+    std::string file_x = "data/accelerometer_x.txt";
+    std::string file_y = "data/accelerometer_y.txt";
+    std::string file_z = "data/accelerometer_z.txt";
+    std::string write_x = "data/write_x.txt";
+    std::string write_y = "data/write_y.txt";
+    std::string write_z = "data/write_z.txt";
 
     std::cout << "Init read_file_test \n";
 
