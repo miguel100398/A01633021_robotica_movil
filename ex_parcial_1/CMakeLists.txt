@@ -7,3 +7,8 @@ add_executable(build/read_file_test_exe
 src/read_file.cpp
 tests/read_file_test.cpp)
 
+add_executable(build/fourier_test_exe 
+src/read_file.cpp
+src/fourier.cpp
+tests/fourier_test.cpp)
+
