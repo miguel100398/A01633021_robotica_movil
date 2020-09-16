@@ -3,7 +3,7 @@
 
 #include "../includes/read_file.hpp"
 
-bool read_file(std::string file_name, double *coord){
+bool read_file(std::string file_name, double *coord, int size){
     std::string tmp_data;
     int idx = 0;
     std::ifstream rd_file(file_name);
@@ -17,8 +17,8 @@ bool read_file(std::string file_name, double *coord){
     //read file
     while ( getline (rd_file, tmp_data)){
         coord[idx++] = std::stod(tmp_data);
-        if (idx > ARR_SIZE){
-            std::cout <<"Error, File is greater than ARR_SIZE:" << std::to_string(ARR_SIZE) << "\n";
+        if (idx > size){
+            std::cout <<"Error, File is greater than ARR_SIZE:" << std::to_string(size) << "\n";
             return false;
         }
     }
@@ -26,7 +26,7 @@ bool read_file(std::string file_name, double *coord){
     return true;
 }
 
-bool write_file(std::string file_name, double *array_to_write){
+bool write_file(std::string file_name, double *array_to_write, int size){
     std::ofstream wr_file(file_name);
 
     //Check if file is open
@@ -36,7 +36,7 @@ bool write_file(std::string file_name, double *array_to_write){
     }
 
     //Write arrray to file
-    for (int idx=0; idx<ARR_SIZE; idx++){
+    for (int idx=0; idx<size; idx++){
         
         wr_file <<  std::setprecision(PRINT_PRECISION) << array_to_write[idx] << "\n";
     }

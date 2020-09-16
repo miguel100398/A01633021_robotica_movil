@@ -44,19 +44,19 @@ int main(){
     std::cout << "Init fourier_test\n";
 
     std::cout << "Reading Files \n";
-    if (!read_file(file_x, arr_x)){
+    if (!read_file(file_x, arr_x, ARR_SIZE)){
         std::cout << "Can´t read file x, Exit program \n";
         return 1;
     }
-    if (!read_file(file_y, arr_y)){
+    if (!read_file(file_y, arr_y, ARR_SIZE)){
         std::cout << "Can´t read file y, Exit program \n";
         return 1;
     }
-    if (!read_file(file_z, arr_z)){
+    if (!read_file(file_z, arr_z, ARR_SIZE)){
         std::cout << "Can´t read file z, Exit program \n";
         return 1;
     }
-    if (!read_file(file_filter, arr_filter)){
+    if (!read_file(file_filter, arr_filter, ARR_SIZE)){
         std::cout << "Can´t read file filter, Exit program \n";
         return 1;
     }
@@ -98,37 +98,37 @@ int main(){
     }
 
     std::cout << "Writing Fourier Magnitude in files \n";
-    if (!write_file(file_magnitude_x, arr_mag_x)){
+    if (!write_file(file_magnitude_x, arr_mag_x, ARR_SIZE)){
         std::cout << "Can´t print Fourier Magnitude on axis x, Exit program \n";
         return 1;
     }
-    if (!write_file(file_magnitude_y, arr_mag_y)){
+    if (!write_file(file_magnitude_y, arr_mag_y, ARR_SIZE)){
         std::cout << "Can´t print Fourier Magnitude on axis y, Exit program \n";
         return 1;
     }
-    if (!write_file(file_magnitude_z, arr_mag_z)){
+    if (!write_file(file_magnitude_z, arr_mag_z, ARR_SIZE)){
         std::cout << "Can´t print Fourier Magnitude on axis z, Exit program \n";
         return 1;
     }
-    if (!write_file(file_magnitude_filter, arr_mag_filter)){
+    if (!write_file(file_magnitude_filter, arr_mag_filter, ARR_SIZE)){
         std::cout << "Can´t print Fourier Magnitude on filter, Exit program \n";
         return 1;
     }
 
     std::cout << "Writing Fourier Phase in files \n";
-    if (!write_file(file_phase_x, arr_phase_x)){
+    if (!write_file(file_phase_x, arr_phase_x, ARR_SIZE)){
         std::cout << "Can´t print Fourier Phase on axis x, Exit program \n";
         return 1;
     }
-    if (!write_file(file_phase_y, arr_phase_y)){
+    if (!write_file(file_phase_y, arr_phase_y, ARR_SIZE)){
         std::cout << "Can´t print Fourier Phase on axis y, Exit program \n";
         return 1;
     }
-    if (!write_file(file_phase_z, arr_phase_z)){
+    if (!write_file(file_phase_z, arr_phase_z, ARR_SIZE)){
         std::cout << "Can´t print Fourier Phase on axis z, Exit program \n";
         return 1;
     }
-    if (!write_file(file_phase_filter, arr_phase_filter)){
+    if (!write_file(file_phase_filter, arr_phase_filter, ARR_SIZE)){
         std::cout << "Can´t print Fourier Phase on filter, Exit program \n";
         return 1;
     }

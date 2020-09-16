@@ -18,34 +18,34 @@ int main(){
 
     //Read files
     std::cout << "Reading file accelerometer_x.txt \n";
-    if (!read_file(file_x,arr_x)){
+    if (!read_file(file_x,arr_x, ARR_SIZE)){
         std::cout << "Error reading file x, exit program \n";
         return 1;
     }
     std::cout << "Reading file accelerometer_y.txt \n";
-    if (!read_file(file_y,arr_y)){
+    if (!read_file(file_y,arr_y, ARR_SIZE)){
         std::cout << "Error reading file y, exit program \n";
         return 1;
     }
     std::cout << "Reading file accelerometer_z.txt \n";
-    if (!read_file(file_z,arr_z)){
+    if (!read_file(file_z,arr_z, ARR_SIZE)){
         std::cout << "Error reading file z, exit program \n";
         return 1;
     }
 
     //Write Files
     std::cout << "Writing file write_x.txt \n";
-    if (!write_file(write_x,arr_x)){
+    if (!write_file(write_x,arr_x, ARR_SIZE)){
         std::cout << "Error writing file x, exit program \n";
         return 1;
     }
     std::cout << "Writing file write_y.txt \n";
-    if (!write_file(write_y,arr_y)){
+    if (!write_file(write_y,arr_y, ARR_SIZE)){
         std::cout << "Error writing file y, exit program \n";
         return 1;
     }
     std::cout << "Writing file write_z.txt \n";
-    if (!write_file(write_z,arr_z)){
+    if (!write_file(write_z,arr_z, ARR_SIZE)){
         std::cout << "Error writing file z, exit program \n";
         return 1;
     }
