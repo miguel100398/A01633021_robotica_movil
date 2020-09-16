@@ -5,14 +5,18 @@
 #include <iostream>
 #include <unistd.h>
 
-#define size 10
+#define size 11
 
 int main(){
     double signal[size];
     double filter[size];  //Two box signals to test convolution
     double result[(size*2)-1];
+        
     //Two box signals to test convolution
-    for
+    for (int idx=0; idx<size; idx++){
+        signal[idx] = 1;
+        filter[idx] = 1;
+    }
 
     std::cout << "Init convolution_test\n";
     std::cout << "Starting convolution \n";
