@@ -8,3 +8,6 @@ src/counter.cpp)
 
 add_executable(build/occurrence_exe 
 src/occurrence.cpp)
+
+add_executable(build/words_exe 
+src/words.cpp)
