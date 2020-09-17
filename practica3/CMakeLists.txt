@@ -11,3 +11,6 @@ src/occurrence.cpp)
 
 add_executable(build/words_exe 
 src/words.cpp)
+
+add_executable(build/hangman_exe 
+src/hangman.cpp)
