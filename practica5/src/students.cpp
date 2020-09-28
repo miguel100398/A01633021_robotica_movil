@@ -21,6 +21,7 @@ void show_unsuccesful_students(student_t *students[]);
 void show_succesful_students(student_t *students[]);
 void delete_student(student_t *students[]);
 void show_student_more_faults(student_t *students[]);
+void delete_all_students(student_t *students[]);
 
 int main(){
     student_t *students[MAX_STUDENTS];
@@ -61,6 +62,7 @@ int main(){
                 break;
         }
     }
+    delete_all_students(students);
     return 0;
 }
 
@@ -71,18 +73,22 @@ void init_students(student_t *students[]){
 }
 
 void add_student(student_t *students[]){
+    std::string tmp_name;
+    char tmp[3] = "tm";
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]==NULL){
+            students[idx] = new student_t;
             std::cout << "Student name: ";
-            std::cin >> (*students)[idx].name;
+            std::cin >> tmp_name;
+            students[idx]->name = tmp_name;
             std::cout << "Score Partial 1: ";
-            std::cin >> (*students)[idx].score_partial1;
+            std::cin >> students[idx]->score_partial1;
             std::cout << "Score Partial 2: ";
-            std::cin >> (*students)[idx].score_partial2;
+            std::cin >> students[idx]->score_partial2;
             std::cout << "Score final: ";
-            std::cin >> (*students)[idx].score_final;
+            std::cin >> students[idx]->score_final;
             std::cout << "Faults: ";
-            std::cin >>(*students)[idx].faults;
+            std::cin >>students[idx]->faults;
             return;
         }
     }
@@ -90,15 +96,14 @@ void add_student(student_t *students[]){
 }
 
 void show_all_students(student_t *students[]){
-    std::cout << "|Name|\t|P1 Score|\t|P2 Score|\t|Final Score|\t|Faults|\n";
+    std::cout << "|  Name  \t|P1 Score\t|P2 Score\t|Final Score\t|Faults\t|\n";
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]!=NULL){
-            std::cout <<"|"<<(*students)[idx].name<<"|\t";
-            std::cout <<"|"<<(*students)[idx].score_partial1<<"|\t";
-            std::cout <<"|"<<(*students)[idx].score_partial2<<"|\t";
-            std::cout <<"|"<<(*students)[idx].score_final<<"|\t";
-            std::cout <<"|"<<(*students)[idx].faults<<"|\n";
-            idx++;
+            std::cout <<"| "<<students[idx]->name<<"\t|";
+            std::cout <<"     "<<students[idx]->score_partial1<<"\t\t|";
+            std::cout <<"     "<<students[idx]->score_partial2<<"\t\t|";
+            std::cout <<"     "<<students[idx]->score_final<<"\t\t|";
+            std::cout <<"   "<<students[idx]->faults<<"\t|\n";
         }
     }
 }
@@ -107,8 +112,8 @@ void show_unsuccesful_students(student_t *students[]){
     std::cout << "Showing Unsccesful students \n";
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]!=NULL){
-            if ((*students)[idx].score_final<7.0){
-                std::cout << (*students)[idx].name << ": " << (*students)[idx].score_final;
+            if (students[idx]->score_final<7.0){
+                std::cout << students[idx]->name << ": " << students[idx]->score_final << "\n";
             }
         }
     }
@@ -118,8 +123,8 @@ void show_succesful_students(student_t *students[]){
     std::cout << "Showing Succesful students \n";
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]!=NULL){
-            if ((*students)[idx].score_final>=7.0){
-                std::cout << (*students)[idx].name << ": " << (*students)[idx].score_final;
+            if (students[idx]->score_final>=7.0){
+                std::cout << students[idx]->name << ": " << students[idx]->score_final << "\n";
             }
         }
     }
@@ -131,7 +136,8 @@ void delete_student(student_t *students[]){
     std::cin >> delete_student;
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]!=NULL){
-            if ((*students)[idx].name==delete_student){
+            if (students[idx]->name==delete_student){
+                delete(students[idx]);
                 students[idx] = NULL;
                 return;
             }
@@ -142,16 +148,29 @@ void delete_student(student_t *students[]){
 
 void show_student_more_faults(student_t *students[]){
     int more_faults=0;
-    int idx_moreFaults=0;
+    int idx_moreFaults=-1;
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]!=NULL){
-            if ((*students)[idx].faults>more_faults){
-                more_faults = (*students)[idx].faults;
+            if (students[idx]->faults>more_faults){
+                more_faults = students[idx]->faults;
                 idx_moreFaults = idx;
             }
         }
     }
-    std::cout << "Student with more faults: " << (*students)[idx_moreFaults].name << " " << more_faults;
+    if (idx_moreFaults>=0){
+        std::cout << "Student with more faults: " << students[idx_moreFaults]->name << " " << more_faults << "\n";
+    }else{
+        std::cout << "Error, student is empty \n";
+    }
+}
+
+void delete_all_students(student_t *students[]){
+    for (int idx=0; idx<MAX_STUDENTS; idx++){
+        if (students[idx]!=NULL){
+            delete(students[idx]);
+            students[idx] = NULL;
+        }
+    }
 }
 
 
