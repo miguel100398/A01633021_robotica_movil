@@ -37,6 +37,7 @@ void pay_debt(linkedList_t *client_system);
 void new_clientSystem(linkedList_t *client_system);
 void delete_clientSystem(linkedList_t *client_system);
 bool exists_id(linkedList_t *client_sytem, int ID, node_linkedList_t **node);
+bool exists_name(linkedList_t *client_sytem, std::string name, node_linkedList_t **node);
 
 int main(){
     int operation;
@@ -184,12 +185,12 @@ void add_debt_client(linkedList_t *client_system){
 }
 
 void delete_client(linkedList_t *client_system){
-    int ID;
+    std::string name;
     node_linkedList_t* tmp_node;
-    std::cout << "Introduce Client ID to delete: ";
-    std::cin >> ID;
-    if (!exists_id(client_system, ID, &tmp_node)){
-        std::cout << "Error Client with ID not found: " << ID << "\n";
+    std::cout << "Introduce Client name to delete: ";
+    std::cin >> name;
+    if (!exists_name(client_system, name, &tmp_node)){
+        std::cout << "Error Client with name not found: " << name << "\n";
         return;
     }
     if (tmp_node==client_system->first_node){           //Deleting first node
@@ -284,6 +285,27 @@ bool exists_id(linkedList_t *client_sytem, int ID, node_linkedList_t **node){
         }
     }
     if (tmp_node->client->Client_ID==ID){
+        *node =tmp_node;
+        return true;
+    }
+    return false;
+}
+
+bool exists_name(linkedList_t *client_sytem, std::string name, node_linkedList_t **node){
+    node_linkedList_t* tmp_node;
+    if (client_sytem->size==0){
+        return false;
+    }
+    tmp_node = client_sytem->first_node;
+    for (int idx=0; idx<client_sytem->size-1;idx++){
+        if (tmp_node->client->Client_Name==name){
+            *node =tmp_node;
+            return true;
+        }else{
+            tmp_node = tmp_node->next_client;
+        }
+    }
+    if (tmp_node->client->Client_Name==name){
         *node =tmp_node;
         return true;
     }
