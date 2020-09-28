@@ -124,6 +124,7 @@ void add_client(linkedList_t *client_system){
     std::cout << "Introduce Debt: ";
     std::cin >> tmp_client->debt;
     tmp_client->Date_subscription = std::time(0);  //get actual time;
+    client_system->last_node = tmp_node;
     client_system->size++;
 }
 
@@ -191,9 +192,33 @@ void delete_client(linkedList_t *client_system){
         std::cout << "Error Client with ID not found: " << ID << "\n";
         return;
     }
-    delete(tmp_node->client);       //Free client memory
-    tmp_node->prev_client->next_client = tmp_node->next_client; //Delete pointer from linked list
-    delete(tmp_node);       //Free node memory
+    if (tmp_node==client_system->first_node){           //Deleting first node
+        if (client_system->size<=1){
+            delete(tmp_node->client);
+            delete(tmp_node);
+        }else{
+            client_system->first_node = tmp_node->next_client;
+            client_system->first_node->prev_client = NULL;
+            delete(tmp_node->client);
+            delete(tmp_node);
+        }
+    }else if(tmp_node==client_system->last_node){       //Deleting last node
+        if (client_system->size<=1){
+            delete(tmp_node->client);
+            delete(tmp_node);
+        }else{
+            client_system->last_node = tmp_node->prev_client;
+            client_system->last_node->next_client = NULL;
+            delete(tmp_node->client);
+            delete(tmp_node);
+        }
+    }
+    else{                                //Deleting Intermediate node
+        delete(tmp_node->client);       //Free client memory
+        tmp_node->prev_client->next_client = tmp_node->next_client; //Delete pointer from linked list
+        tmp_node->next_client->prev_client = tmp_node->prev_client;
+        delete(tmp_node);       //Free node memory
+    }
     client_system->size--;
 }
 
