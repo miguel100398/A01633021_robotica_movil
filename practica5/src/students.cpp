@@ -77,7 +77,11 @@ void add_student(student_t *students[]){
     char tmp[3] = "tm";
     for (int idx=0; idx<MAX_STUDENTS; idx++){
         if (students[idx]==NULL){
-            students[idx] = new student_t;
+            students[idx] = new (std::nothrow) student_t;
+            if (students[idx]==NULL){
+                std::cout << "Error allocating memory for student \n";
+                return;
+            }
             std::cout << "Student name: ";
             std::cin >> tmp_name;
             students[idx]->name = tmp_name;

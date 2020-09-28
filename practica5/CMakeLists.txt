@@ -8,3 +8,6 @@ src/fractions.cpp)
 
 add_executable(build/students_exe 
 src/students.cpp)
+
+add_executable(build/bank_exe 
+src/bank.cpp)
