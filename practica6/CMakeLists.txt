@@ -8,4 +8,4 @@ include/students.hpp
 include/group.hpp
 src/students.cpp
 src/group.cpp
-src/students_main.cpp)
+src/main_students.cpp)
