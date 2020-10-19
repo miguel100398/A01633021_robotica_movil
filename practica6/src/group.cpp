@@ -41,7 +41,7 @@ bool group::addStudent(){
     std::cin >> final;
     //Search for free space to add students
     for (int idx=0; idx<MAX_STUDENTS; idx++){
-        if (stud[idx]!=NULL){
+        if (stud[idx]==NULL){
             searchFreeSpace=true;
             //create new student
             stud[idx] = new students(name, partial1, partial2, final);
