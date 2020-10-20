@@ -18,8 +18,12 @@ void vegetable::setWeight(float _weight){
     date = time(0);
 }
 
-time_t vegetable::getDate(){
-    return date;
+float vegetable::getWeight(){
+    return weight;
+}
+
+time_t* vegetable::getDate(){
+    return &date;
 }
 
 void vegetable::updateDate(){

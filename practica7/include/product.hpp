@@ -19,6 +19,7 @@ class product{
         virtual float getCost();
         virtual bool sellProduct();
         virtual void addStock(int add_stock);
+        virtual int getStock();
 };
 
 #endif //PRODUCT_HPP

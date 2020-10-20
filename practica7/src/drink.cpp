@@ -25,8 +25,8 @@ void drink::addDateExpiry(time_t _date){
     dateExpiry = _date;
 }
 
-time_t drink::getDateExpiry(){
-    return dateExpiry;
+time_t* drink::getDateExpiry(){
+    return &dateExpiry;
 }
 
 void drink::addDensity(float _density){

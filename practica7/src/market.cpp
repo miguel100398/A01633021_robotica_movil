@@ -3,6 +3,7 @@
 
 #include "../include/market.hpp"
 #include <ctime>
+#include <iostream>
 #include <string>
 
 market::~market(){
@@ -106,19 +107,147 @@ void market::addProductStock(){
 }
 
 void market::showAllProducts(){
+    std::map<std::string,product*>::iterator iterator;
+    std::string type;
 
+    std::cout << "|product type||Name\t|| Cost \t|| Stock \t|\n";
+    //Show vegetables
+    type = "vegetables";
+    iterator = vegetableMap.begin();
+    while (iterator != vegetableMap.end()){
+        vegetable* tmp;
+        tmp = (vegetable*)iterator->second;
+        std::cout << "| vegetable |";
+        std::cout << "|" <<tmp->getName()<<"\t|";
+        std::cout << "|" <<tmp->getPriceWeight()<<"\t|";
+        std::cout << "|" <<tmp->getStock()<<"\t|\n";
+        iterator++;
+    }
+    //show drinks
+    type = "drinks";
+    iterator = drinkMap.begin();
+    while(iterator != drinkMap.end()){
+        drink* tmp;
+        tmp = (drink*)iterator->second;
+        std::cout << "|   drinks  |";
+        std::cout << "|" <<tmp->getName()<<"\t|";
+        std::cout << "|" <<tmp->getCost()<<"\t|";
+        std::cout << "|" <<tmp->getStock()<<"\t|\n";
+        iterator++;
+    }
 }
 
 void market::showTypeofProduct(){
+    std::map<std::string,product*>::iterator iterator;
+    std::string type;
 
+    std::cout << "Introduce type(vegetable, drink): ";
+    std::cin >> type;
+
+    if (type == "vegetable"){
+        std::cout << "|Name\t|| Cost \t|| Stock \t|| weight \t|| date \t|\n";
+        iterator = vegetableMap.begin();
+        while (iterator != vegetableMap.end()){
+            vegetable* tmp =(vegetable*) iterator->second;
+            std::cout << "|" <<tmp->getName()<<"\t|";
+            std::cout << "|" <<tmp->getPriceWeight()<<"\t|";
+            std::cout << "|" <<tmp->getStock()<<"\t|";
+            std::cout << "|" <<tmp->getWeight()<<"\t|";
+            std::cout << "|" <<ctime(tmp->getDate())<<"\t|\n";
+            iterator++;
+        }
+    }else if (type == "drink"){
+        std::cout << "|Name\t|| Cost \t|| Stock \t|| liters \t|| exp date \t|| density \t|\n";
+        iterator = drinkMap.begin();
+        while (iterator != drinkMap.end()){
+            drink* tmp =(drink*) iterator->second;
+            std::cout << "|" <<tmp->getName()<<"\t|";
+            std::cout << "|" <<tmp->getCost()<<"\t|";
+            std::cout << "|" <<tmp->getStock()<<"\t|";
+            std::cout << "|" <<tmp->getLitters()<<"\t|";
+            std::cout << "|" <<ctime(tmp->getDateExpiry())<<"\t|";
+            std::cout << "|" <<tmp->getDensity()<<"\t|\n";
+            iterator++;
+        }
+    }else {
+        std::cout << "Error, wronk type\n";
+    }
 }
 
 void market::deleteProduct(){
+    std::map<std::string,product*>::iterator iterator;
+    std::string type;
+    std::string name;
 
+    std::cout << "Introduce type to delete(vegetable, drink): ";
+    std::cin >> type;
+
+    std::cout << "Introduce name of product: ";
+    std::cin >> name;
+
+    if (type == "vegetable"){
+        iterator = vegetableMap.find(name);
+        if (iterator== vegetableMap.end()){
+            std::cout << "Error, product not found";
+            return;
+        }
+        delete iterator->second;
+        vegetableMap.erase(iterator);
+    }else if (type == "drink"){
+        iterator = drinkMap.find(name);
+        if (iterator== drinkMap.end()){
+            std::cout << "Error, product not found";
+            return;
+        }
+        delete iterator->second;
+        drinkMap.erase(iterator);
+    }else {
+        std::cout << "Error, Can't delete item, incorrect type\n";
+    }
 }
 
 void market::shopping(){
+    std::map<std::string,product*>::iterator iterator;
+    float total=0;
+    std::vector<std::string> products;
+    std::string product;
     
+    while (true){
+        std::cout << "Introduce product to buy or write \"buy\" to buy the products: ";
+        std::cin >> product;
+        if (product=="buy"){
+            break;
+        }else{
+            iterator = vegetableMap.find(product);
+            if (iterator != vegetableMap.end()){
+                vegetable* tmp =(vegetable*) iterator->second;
+                if (tmp->sellProduct()){
+                    total += tmp->getCost(tmp->getWeight());
+                    products.push_back(product);
+                }
+            }else{
+                iterator = drinkMap.find(product);
+                if (iterator != drinkMap.end()){
+                    drink* tmp =(drink*) iterator->second;
+                    if (tmp->sellProduct()){
+                        total += tmp->getCost();
+                        products.push_back(product);
+                    }
+                }else{
+                    std::cout << "Error, product not found\n";
+                }
+            }
+
+        }
+    }
+
+    std::cout << "Total: " << total <<"\n";
+    std::cout << "products: ";
+    while (products.size()>0){
+        std::cout << products.back() << ", ";
+        products.pop_back();
+    }
+    std::cout << "\n";
 }
 
 

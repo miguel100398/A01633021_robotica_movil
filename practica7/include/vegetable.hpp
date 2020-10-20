@@ -12,7 +12,8 @@ class vegetable : public product{
         vegetable(std::string _name, float _weight, float _priceweight, int _stock);
         ~vegetable();
         virtual void setWeight(float _weight);
-        virtual time_t getDate();
+        virtual float getWeight();
+        virtual time_t* getDate();
         virtual void updateDate();
         virtual void changePriceWeight(float _price);
         virtual float getPriceWeight();

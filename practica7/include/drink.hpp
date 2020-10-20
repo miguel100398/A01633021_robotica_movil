@@ -14,7 +14,7 @@ class drink : public product{
         virtual void setLiters(float _liters);
         virtual float getLitters();
         virtual void addDateExpiry(time_t _date);
-        virtual time_t getDateExpiry();
+        virtual time_t* getDateExpiry();
         virtual void addDensity(float _density);
         virtual float getDensity();
         virtual float getCost();

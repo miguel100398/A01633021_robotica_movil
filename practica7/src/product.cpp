@@ -50,4 +50,8 @@ void product::addStock(int add_stock){
     stock += add_stock;
 }
 
+int product::getStock(){
+    return stock;
+}
+
 #endif //PRODUCT_CPP
