@@ -3,19 +3,12 @@ project(practica_2)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -O3 ${CMAKE_CXX_FLAGS}")
 
-add_executable(build/main_students_exe 
-include/students.hpp
-include/group.hpp
-src/students.cpp
-src/group.cpp
-src/main_students.cpp)
+add_executable(build/supermarket_exe 
+include/product.hpp
+include/vegetable.hpp
+include/drink.hpp
+src/product.cpp
+src/vegetable.cpp 
+src/drink.cpp
+src/main_product)
 
-add_executable(build/main_bank_exe
-include/client.hpp
-include/node_linkedList.hpp
-include/bank.hpp
-src/client.cpp
-src/node_linkedList.tpp
-src/bank.cpp
-src/main_bank.cpp
-)
