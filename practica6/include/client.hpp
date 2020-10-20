@@ -15,9 +15,10 @@ class client{
         client(std::string name);
         ~client();
         std::string getName();
+        int getID();
         double getAccountAmount();
         void addAccountAmount(double ammount);
-        time_t getDateSubscription();
+        time_t* getDateSubscription();
         double getDebt();
         void addAccountDebt(double add_debt);
         bool payDebt();

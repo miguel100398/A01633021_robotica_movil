@@ -4,12 +4,16 @@
 #include "../include/client.hpp"
 
 client::client(std::string name){
-    srand (time(NULL));
-    client_id = rand();
+    srand (std::time(0));
+    client_id = rand()%1000;
     client_name = name;
     account_amount = 0;
     date_subscription = std::time(0);
     debt = 0;
+}
+
+int client::getID(){
+    return client_id;
 }
 
 std::string client::getName(){
@@ -24,8 +28,8 @@ void client::addAccountAmount(double ammount){
     account_amount+=ammount;
 }
 
-time_t client::getDateSubscription(){
-    return date_subscription;
+time_t* client::getDateSubscription(){
+    return &date_subscription;
 }
 
 double client::getDebt(){
@@ -33,7 +37,7 @@ double client::getDebt(){
 }
 
 void client::addAccountDebt(double add_debt){
-    debt += debt;
+    debt += add_debt;
 }
 
 bool client::payDebt(){

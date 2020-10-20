@@ -1,6 +1,7 @@
 #ifndef BANK_HPP  
 #define BANK_HPP  
 
+#include <iostream>
 #include "client.hpp"
 #include "node_linkedList.hpp"
 
