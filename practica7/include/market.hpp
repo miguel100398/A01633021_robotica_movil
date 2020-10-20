@@ -6,6 +6,7 @@
 #include "drink.hpp"
 #include <map>
 #include <vector>
+#include <ctime>
 
 //mymap.insert ( std::pair<char,int>('a',100) );
 // mymap.find('a')->second

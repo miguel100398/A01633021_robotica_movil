@@ -54,10 +54,12 @@ void market::addProductStock(){
         iterator++;
     }
 
+    
+    std::cout << "introduce stock to be added: ";
+    std::cin >> add_stock;
+
     if (found){
         std::cout << "Product found \n";
-        std::cout << "introduce stock to be added: ";
-        std::cin >> add_stock;
         iterator->second->addStock(add_stock);
     }else{
         std::cout << "Product not found, register new product\n";
@@ -71,7 +73,7 @@ void market::addProductStock(){
             vegetable* tmp_veg = new vegetable(name,weight,price_weight,add_stock);
             vegetableMap.insert(std::pair<std::string,product*>(name,tmp_veg));
         }else if (type=="drink"){
-            struct tm* time;
+            tm* time;
             time_t expiration;
             float cost;
             float liters;
@@ -79,6 +81,8 @@ void market::addProductStock(){
             int e_days;
             int e_month;
             int e_year;
+            std::time(&expiration);
+	        time = localtime(&expiration);
             std::cout << "Introduce cost: ";
             std::cin >> cost;
             std::cout << "Introduce liters: ";
@@ -93,9 +97,10 @@ void market::addProductStock(){
             std::cin >> e_year;
 
             time->tm_year = 1900-e_year;
-            time->tm_mon = e_month;
+            time->tm_mon = e_month-1;
             time->tm_mday = e_days;
             expiration = mktime(time);
+            std::cout << "After make time";
             drink* tmp_drink = new drink(name, cost, add_stock, liters, expiration, density);
             drinkMap.insert(std::pair<std::string,product*>(name,tmp_drink));
 
@@ -119,7 +124,7 @@ void market::showAllProducts(){
         tmp = (vegetable*)iterator->second;
         std::cout << "| vegetable |";
         std::cout << "|" <<tmp->getName()<<"\t|";
-        std::cout << "|" <<tmp->getPriceWeight()<<"\t|";
+        std::cout << "|" <<tmp->getCost(tmp->getWeight())<<"\t\t|";
         std::cout << "|" <<tmp->getStock()<<"\t|\n";
         iterator++;
     }
@@ -131,7 +136,7 @@ void market::showAllProducts(){
         tmp = (drink*)iterator->second;
         std::cout << "|   drinks  |";
         std::cout << "|" <<tmp->getName()<<"\t|";
-        std::cout << "|" <<tmp->getCost()<<"\t|";
+        std::cout << "|" <<tmp->getCost()<<"\t\t|";
         std::cout << "|" <<tmp->getStock()<<"\t|\n";
         iterator++;
     }
@@ -145,32 +150,33 @@ void market::showTypeofProduct(){
     std::cin >> type;
 
     if (type == "vegetable"){
-        std::cout << "|Name\t|| Cost \t|| Stock \t|| weight \t|| date \t|\n";
+        std::cout << "|Name\t|| price \t|| Stock \t|| weight \t|| date \t|\n";
         iterator = vegetableMap.begin();
         while (iterator != vegetableMap.end()){
             vegetable* tmp =(vegetable*) iterator->second;
             std::cout << "|" <<tmp->getName()<<"\t|";
-            std::cout << "|" <<tmp->getPriceWeight()<<"\t|";
+            std::cout << "|" <<tmp->getPriceWeight()<<"\t\t|";
             std::cout << "|" <<tmp->getStock()<<"\t|";
             std::cout << "|" <<tmp->getWeight()<<"\t|";
             std::cout << "|" <<ctime(tmp->getDate())<<"\t|\n";
             iterator++;
         }
     }else if (type == "drink"){
-        std::cout << "|Name\t|| Cost \t|| Stock \t|| liters \t|| exp date \t|| density \t|\n";
+        std::cout << "|Name\t|| Cost \t|| Stock \t|| liters \t|| density \t|| exp date \t|\n";
         iterator = drinkMap.begin();
         while (iterator != drinkMap.end()){
             drink* tmp =(drink*) iterator->second;
             std::cout << "|" <<tmp->getName()<<"\t|";
-            std::cout << "|" <<tmp->getCost()<<"\t|";
-            std::cout << "|" <<tmp->getStock()<<"\t|";
-            std::cout << "|" <<tmp->getLitters()<<"\t|";
-            std::cout << "|" <<ctime(tmp->getDateExpiry())<<"\t|";
-            std::cout << "|" <<tmp->getDensity()<<"\t|\n";
+            std::cout << "|" <<tmp->getCost()<<"\t\t|";
+            std::cout << "|" <<tmp->getStock()<<"\t\t|";
+            std::cout << "|" <<tmp->getLitters()<<"\t\t|";
+            std::cout << "|" <<tmp->getDensity()<<"\t\t|";
+            std::cout << "|" <<ctime(tmp->getDateExpiry())<<"\t|\n";
+            
             iterator++;
         }
     }else {
-        std::cout << "Error, wronk type\n";
+        std::cout << "Error, wrong type\n";
     }
 }
 
@@ -188,7 +194,7 @@ void market::deleteProduct(){
     if (type == "vegetable"){
         iterator = vegetableMap.find(name);
         if (iterator== vegetableMap.end()){
-            std::cout << "Error, product not found";
+            std::cout << "Error, product not found\n";
             return;
         }
         delete iterator->second;
@@ -196,7 +202,7 @@ void market::deleteProduct(){
     }else if (type == "drink"){
         iterator = drinkMap.find(name);
         if (iterator== drinkMap.end()){
-            std::cout << "Error, product not found";
+            std::cout << "Error, product not found\n";
             return;
         }
         delete iterator->second;
