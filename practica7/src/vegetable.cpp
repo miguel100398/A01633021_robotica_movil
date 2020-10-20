@@ -39,5 +39,25 @@ float vegetable::getCost(float _sellWeight){
     return _sellWeight*price_due_weight;
 }
 
+void vegetable::changeName(std::string _name){
+    product::changeName(_name);
+    date = time(0);
+}
+
+void vegetable::changeCost(float _cost){
+    product::changeCost(_cost);
+    date = time(0);
+}
+
+bool vegetable::sellProduct(){
+    date = time(0);
+    return product::sellProduct();
+}
+
+void vegetable::addStock(int add_stock){
+    product::addStock(add_stock);
+    date = time(0);
+}
+
 
 #endif // VEGETABLE_CPP

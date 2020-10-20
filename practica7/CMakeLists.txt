@@ -7,8 +7,10 @@ add_executable(build/supermarket_exe
 include/product.hpp
 include/vegetable.hpp
 include/drink.hpp
+include/market.hpp
 src/product.cpp
 src/vegetable.cpp 
 src/drink.cpp
-src/main_product)
+src/main_product
+src/market.cpp)
 

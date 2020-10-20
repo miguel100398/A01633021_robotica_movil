@@ -17,6 +17,10 @@ class vegetable : public product{
         virtual void changePriceWeight(float _price);
         virtual float getPriceWeight();
         virtual float getCost(float _sellWeight);
+        virtual void changeName(std::string _name);
+        virtual void changeCost(float _cost);
+        virtual bool sellProduct();
+        virtual void addStock(int add_stock);
 
 };
 
