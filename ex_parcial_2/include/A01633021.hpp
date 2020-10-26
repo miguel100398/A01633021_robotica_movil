@@ -3,6 +3,7 @@
 
 #include "OP3_Arm.hpp"
 #include <iostream>
+#include <math.h>
 
 class A01633021 : public OP3_Arm{
     public:

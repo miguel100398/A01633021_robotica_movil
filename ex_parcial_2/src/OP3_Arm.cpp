@@ -30,6 +30,14 @@ void OP3_Arm::set_dis_w_p3(distance_t _dis_w_p3){
     dis_w_p3 = _dis_w_p3;
 }
 
+void OP3_Arm::set_dis_w_p4(distance_t _dis_w_p4){
+    dis_w_p4 = _dis_w_p4;
+}
+
+void OP3_Arm::set_altura(float _altura){
+    altura = _altura;
+}
+
 distance_t OP3_Arm::get_dis_w_p1(){
     return dis_w_p1;
 }
@@ -40,6 +48,14 @@ distance_t OP3_Arm::get_dis_w_p2(){
 
 distance_t OP3_Arm::get_dis_w_p3(){
     return dis_w_p3;
+}
+
+distance_t OP3_Arm::get_dis_w_p4(){
+    return dis_w_p4;
+}
+
+float OP3_Arm::get_altura(){
+    return altura;
 }
 
 void OP3_Arm::set_coor_end_efector(coordinates_t _coor_end_efector){
