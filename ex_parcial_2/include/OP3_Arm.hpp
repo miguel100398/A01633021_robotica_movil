@@ -30,7 +30,7 @@ class OP3_Arm {
 
     public:
         OP3_Arm();      //Constructor default
-        OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, float _altura);  //Constructor indicando parametros constantes
+        OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, distance_t _dis_w_p4, float _altura);  //Constructor indicando parametros constantes
         ~OP3_Arm();     //Destructor
         //Setters parametros constantes
         void set_dis_w_p1(distance_t _dis_w_p1);    
