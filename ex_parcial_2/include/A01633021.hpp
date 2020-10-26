@@ -16,6 +16,9 @@ class A01633021 : public OP3_Arm{
         //Auxiliar functions to calculate sin and cos in degrees
         double sind(float degree);      
         double cosd(float degree);
+        double asind(float value);
+        double acosd(float value);
+        double atand(float value);
 };
 
 #endif //A01633021_HPP
