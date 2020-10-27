@@ -18,12 +18,12 @@ int main(){
     robot->set_coor_theta2(theta_2);
     robot->set_coor_theta3(theta_3);
     */
-    coordinates_t final = {.x=7, .y=5, .z=-5, .angle = 0};
+    coordinates_t final = {.x=7, .y=5, .z=-5};
     robot->set_coor_end_efector(final);
     robot->calculate_inverse_kinematics();
-    std::cout << "theta1: " << robot->get_coor_theta1().angle << " ";
-    std::cout << "theta2: " << robot->get_coor_theta2().angle << " ";
-    std::cout << "theta3: " << robot->get_coor_theta3().angle << " \n";
+    std::cout << "theta1: " << robot->get_coor_union1() << " ";
+    std::cout << "theta2: " << robot->get_coor_union2() << " ";
+    std::cout << "theta3: " << robot->get_coor_union3() << " \n";
     robot->calculate_forward_kinematics();  
     std::cout << "X: " << robot->get_coor_end_efector().x << " ";
     std::cout << "Y: " << robot->get_coor_end_efector().y << " ";

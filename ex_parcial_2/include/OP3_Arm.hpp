@@ -5,7 +5,6 @@ typedef struct coordinates_s {
     float x;
     float y;
     float z;
-    float angle;
 } coordinates_t;
 
 typedef struct distance_s {
@@ -17,10 +16,10 @@ typedef struct distance_s {
 
 class OP3_Arm {
     protected:
-        coordinates_t coor_theta1;          //Coordinada theta 1
-        coordinates_t coor_theta2;          //Coordinada theta 2    
-        coordinates_t coor_theta3;          // Coordinada theta 3
-        coordinates_t coor_end_efector;     //Coordinada efector final
+        float coor_union1;                  //Coordinada angular union 1
+        float coor_union2;                  //Coordinada angular union 2   
+        float coor_union3;                  //Coordinada angular union 3
+        coordinates_t coor_end_efector;     //Coordinada cartesian efector final
         //Parametros constantes
         distance_t dis_w_p1;                //Distancia del punto w a punto 1
         distance_t dis_w_p2;                //Distancia del punto w a punto 2
@@ -47,13 +46,13 @@ class OP3_Arm {
         void set_coor_end_efector(coordinates_t _coor_end_efector);       //Set coordinadas efector final
         coordinates_t get_coor_end_efector();           //get coordinates efector final
         //Setters coordinadas uniones
-        void set_coor_theta1(coordinates_t _coor_theta1);
-        void set_coor_theta2(coordinates_t _coor_theta2);
-        void set_coor_theta3(coordinates_t _coor_theta3);
+        void set_coor_union1(float _coor_union1);
+        void set_coor_union2(float _coor_union2);
+        void set_coor_union3(float _coor_union3);
         //Getters coordinadas uniones
-        coordinates_t get_coor_theta1();
-        coordinates_t get_coor_theta2();
-        coordinates_t get_coor_theta3();
+        float get_coor_union1();
+        float get_coor_union2();
+        float get_coor_union3();
         virtual void calculate_forward_kinematics();
         virtual void calculate_inverse_kinematics();
 

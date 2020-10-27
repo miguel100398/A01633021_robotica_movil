@@ -68,28 +68,28 @@ coordinates_t OP3_Arm::get_coor_end_efector(){
     return coor_end_efector;
 }
 
-void OP3_Arm::set_coor_theta1(coordinates_t _coor_theta1){
-    coor_theta1 = _coor_theta1;
+void OP3_Arm::set_coor_union1(float _coor_union1){
+    coor_union1 = _coor_union1;
 }
 
-void OP3_Arm::set_coor_theta2(coordinates_t _coor_theta2){
-    coor_theta2 = _coor_theta2;
+void OP3_Arm::set_coor_union2(float _coor_union2){
+    coor_union2 = _coor_union2;
 }
 
-void OP3_Arm::set_coor_theta3(coordinates_t _coor_theta3){
-    coor_theta3 = _coor_theta3;
+void OP3_Arm::set_coor_union3(float _coor_union3){
+    coor_union3 = _coor_union3;
 }
 
-coordinates_t OP3_Arm::get_coor_theta1(){
-    return coor_theta1;
+float OP3_Arm::get_coor_union1(){
+    return coor_union1;
 }
 
-coordinates_t OP3_Arm::get_coor_theta2(){
-    return coor_theta2;
+float OP3_Arm::get_coor_union2(){
+    return coor_union2;
 }
 
-coordinates_t OP3_Arm::get_coor_theta3(){
-    return coor_theta3;
+float OP3_Arm::get_coor_union3(){
+    return coor_union3;
 }
 
 void OP3_Arm::calculate_forward_kinematics(){
