@@ -5,33 +5,24 @@
 #include <iostream>
 
 int main(){
+    // Parametros robot
     distance_t w_1 = {.dx=-3.95, .dy=6.44, .dz=0.0304, .dist=7.5549};
     distance_t w_2 = {.dx=-1.161, .dy=8.85, .dz=0.9696, .dist=9.0474};
     distance_t w_3 = {.dx=-1.161, .dy=17.89, .dz=0.9796, .dist=17.989};
     distance_t w_4 = {.dx=-3.95, .dy=32.541, .dz=-13.153, .dist=32.8062};
+    //tiempo de muestreo
+    float time_m = 0.01;
+    //Archivos para guardar datos
+    std::string trajectory_files[5]     = {"trajectory_1.txt", "trajectory_2.txt", "trajectory_3.txt", "trajectory_4.txt", "trajectory_5.txt"};
+    std::string joints_files[5]         = {"joints_1.txt", "joints_2.txt", "joints_3.txt", "joints_4.txt", "joints_5.txt"};
+    std::string efector_files[5]        = {"efector_1.txt", "efector_2.txt", "efector_3.txt", "efector_4.txt", "efector_5.txt"};
+    std::string error_files[5]          = {"error_1.txt", "error_2.txt", "error_3.txt", "error_4.txt", "error_5.txt"};
     A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 7);
-    /*
-    coordinates_t theta_1 = {.x=0, .y=0, .z=0, .angle = -25};
-    coordinates_t theta_2 = {.x=0, .y=0, .z=0, .angle = 45};
-    coordinates_t theta_3 = {.x=0, .y=0, .z=0, .angle = -30};
-    robot->set_coor_theta1(theta_1);
-    robot->set_coor_theta2(theta_2);
-    robot->set_coor_theta3(theta_3);
-    */
-    coordinates_t final = {.x=7, .y=5, .z=-5};
-    robot->set_coor_end_efector(final);
-    robot->calculate_inverse_kinematics();
-    std::cout << "theta1: " << robot->get_coor_union1() << " ";
-    std::cout << "theta2: " << robot->get_coor_union2() << " ";
-    std::cout << "theta3: " << robot->get_coor_union3() << " \n";
-    robot->calculate_forward_kinematics();  
-    std::cout << "X: " << robot->get_coor_end_efector().x << " ";
-    std::cout << "Y: " << robot->get_coor_end_efector().y << " ";
-    std::cout << "Z: " << robot->get_coor_end_efector().z << " \n";
-
     
     delete robot;
     return 0;
 }
+
+
 
 #endif // MAIN_CPP
