@@ -28,16 +28,16 @@ void A01633021::calculate_forward_kinematics(){
     //Encontrar d6
     d6 = cosd(angle5) * l2;
     //Encontrar Z de efector final
-    coor_end_efector.z = d2 + d3 - d6;
+    coor_end_efector.z = (d2 + d3 - d6) * cosd(coor_union1);
     //Encontrar d4
-    d4 = cosd(coor_union2) * l1;
+    d4 = cosd(coor_union2-180) * l1;
     //Encontrar d5
     d5 = sind(angle5) * l2; 
     //Calcular d1
     d1 = d4 + d5;
     //Encontrar x de efector final
-    coor_end_efector.x = cosd(coor_union1)*d1 + dis_w_p2.dx;
-    coor_end_efector.y = sind(coor_union1)*d1 + dis_w_p2.dy;
+    coor_end_efector.x = (sind(coor_union1)*d1); //+ dis_w_p2.dx;
+    coor_end_efector.y = cosd(coor_union1)*d1; //+ dis_w_p2.dy;
     //Calcular coordenadas de uniones
 }
 
