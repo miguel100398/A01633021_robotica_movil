@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <math.h>
-#include <queue>
+#include <deque>
 
 #define PI 3.14159265
 
@@ -29,23 +29,29 @@ typedef struct angular_coordinates_time_s{
 
 class A01633021 : public OP3_Arm{
     private:
-        std::queue<coordinates_time_t> queue_trajectory;       //Vector para guardar coordenadas de trayectoria
-        std::queue<angular_coordinates_time_t> queue_joints;   //Vector para almacenar coordenadas angulares de uniones
-        std::queue<coordinates_time_t> queue_efector;          //Vector para guardar coordenadas angulares de efector
-        std::queue<coordinates_time_t> queue_error;            //Vector para guardar error de coordenadas 
+        std::deque<coordinates_time_t> queue_trajectory;       //queue para guardar coordenadas de trayectoria
+        std::deque<angular_coordinates_time_t> queue_joints;   //queue para almacenar coordenadas angulares de uniones
+        std::deque<coordinates_time_t> queue_efector;          //queue para guardar coordenadas angulares de efector
+        std::deque<coordinates_time_t> queue_error;            //queue para guardar error de coordenadas 
     public:
         //Sobre escribir metodos
         A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t w_4, float _altura);
         void calculate_forward_kinematics();
         void calculate_inverse_kinematics();
-        //Leer trayectoria de archivo de texto para guardarlo en vector
+        //Leer trayectoria de archivo de texto para guardarlo en queue
         bool read_trajectory(std::string file_name);
-        //Escribir coordenadas andgulare del vector en archivo de texto
+        //Escribir coordenadas andgulare del queue en archivo de texto
         bool write_joints(std::string file_name);
         //Escribir coordenadas de efector final en archivo de texto
         bool write_efector(std::string file_name);
         //Escribit error en coordenadas en archivo de texto
         bool write_error(std::string file_name);
+        //Funcion para procesar trayectoria,
+        //Leera coordenadas de queue de trayectoria
+        //Calculara cinematica inversa para cada punto y escribira las coordenadas angulares en queue de joints
+        //Calculara la cinematica directa de las coordenadas angulares calculadas y escribira la coordenada en queue de efector
+        //Calculara error entre las coordenadas obtenidas y lo escribira en queue de error
+        void process_trajectory();
         //Funciones auxiliares para calcular seno, coseno y sus inversos en grados
         double sind(float degree);      
         double cosd(float degree);

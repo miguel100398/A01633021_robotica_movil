@@ -68,6 +68,47 @@ void A01633021::calculate_inverse_kinematics(){
     coor_union3 = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l1*l2));
 }
 
+void A01633021::process_trajectory(){
+    float time;
+    coordinates_time_t tmp_trajectory;
+    angular_coordinates_time_t tmp_joints;
+    coordinates_time_t tmp_efector;
+    coordinates_time_t tmp_error;
+        //Iterate queue
+    for (int idx=0; idx<queue_trajectory.size(); idx++){
+        //Obtener tiempo
+        time =  queue_trajectory[idx].time;
+        //Obtener coordenadas deseadas
+        tmp_trajectory =  queue_trajectory[idx];
+        coor_end_efector.x = tmp_trajectory.coordinates.x;  
+        coor_end_efector.y = tmp_trajectory.coordinates.y;
+        coor_end_efector.z = tmp_trajectory.coordinates.z;
+        //Aplicar cinematica inversa
+        calculate_inverse_kinematics();
+        //Guardar coordenadas angulares calculadas
+        tmp_joints.time = time;
+        tmp_joints.coordinates.coordinate_join1 = coor_union1;
+        tmp_joints.coordinates.coordinate_join2 = coor_union2;
+        tmp_joints.coordinates.coordinate_join3 = coor_union3;
+        //Calcular cinematica directa con coordenadas angulares calculadas;
+        calculate_forward_kinematics();
+        //Guardar coordenada cartesiana de efector final calculado
+        tmp_efector.time = time;
+        tmp_efector.coordinates.x = coor_end_efector.x;
+        tmp_efector.coordinates.y = coor_end_efector.y;
+        tmp_efector.coordinates.z = coor_end_efector.z;
+        //Calcular error y guardar errores
+        tmp_error.time = time;
+        tmp_error.coordinates.x = tmp_trajectory.coordinates.x - tmp_efector.coordinates.x;
+        tmp_error.coordinates.y = tmp_trajectory.coordinates.y - tmp_efector.coordinates.y;
+        tmp_error.coordinates.z = tmp_trajectory.coordinates.z - tmp_efector.coordinates.z;
+        //Guardar estructuras en queue
+        queue_joints.push_back(tmp_joints);
+        queue_efector.push_back(tmp_efector);
+        queue_error.push_back(tmp_error);
+    }
+}
+
 bool A01633021::read_trajectory(std::string file_name){
     std::string tmp_data;
     std::ifstream rd_file(file_name);
@@ -86,9 +127,9 @@ bool A01633021::read_trajectory(std::string file_name){
         std::stringstream ss(tmp_data);
         ss >> tmp_struct.time;                      //get time from file
         ss >> tmp_struct.coordinates.x;             //Get x from file
-        ss >> tmp_struct.coordinates.y; //Get y from file
-        ss >> tmp_struct.coordinates.z; //Get z from file
-        queue_trajectory.push(tmp_struct);
+        ss >> tmp_struct.coordinates.y;             //Get y from file
+        ss >> tmp_struct.coordinates.z;             //Get z from file
+        queue_trajectory.push_back(tmp_struct);
     }
 
     rd_file.close();
@@ -112,7 +153,7 @@ bool A01633021::write_joints(std::string file_name){
     //Escribir vector
     while (!queue_joints.empty()){
         tmp_struct = queue_joints.front();
-        queue_joints.pop();
+        queue_joints.pop_front();
         wr_file << tmp_struct.time << ", " << tmp_struct.coordinates.coordinate_join1 << ", " << tmp_struct.coordinates.coordinate_join2 << ", " << tmp_struct.coordinates.coordinate_join3 << "\n";
     }
 
@@ -136,7 +177,7 @@ bool A01633021::write_efector(std::string file_name){
     //Escribir vector
     while (!queue_efector.empty()){
         tmp_struct = queue_efector.front();
-        queue_efector.pop();
+        queue_efector.pop_front();
         wr_file << tmp_struct.time << ", " << tmp_struct.coordinates.x << ", " << tmp_struct.coordinates.y << ", " << tmp_struct.coordinates.z << "\n";
     }
 
@@ -160,7 +201,7 @@ bool A01633021::write_error(std::string file_name){
     //Escribir vector
     while (!queue_error.empty()){
         tmp_struct = queue_error.front();
-        queue_error.pop();
+        queue_error.pop_front();
         wr_file << tmp_struct.time << ", " << tmp_struct.coordinates.x << ", " << tmp_struct.coordinates.y << ", " << tmp_struct.coordinates.z << "\n";
     }
 
