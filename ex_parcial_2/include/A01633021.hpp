@@ -52,6 +52,7 @@ class A01633021 : public OP3_Arm{
         //Calculara la cinematica directa de las coordenadas angulares calculadas y escribira la coordenada en queue de efector
         //Calculara error entre las coordenadas obtenidas y lo escribira en queue de error
         void process_trajectory();
+        void clear_trajectory();
         //Funciones auxiliares para calcular seno, coseno y sus inversos en grados
         double sind(float degree);      
         double cosd(float degree);

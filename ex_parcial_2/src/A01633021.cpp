@@ -2,6 +2,7 @@
 #define A01633021_CPP  
 
 #include "../include/A01633021.hpp"
+#include <string>
 
 
 A01633021::A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t w_4, float _altura) : OP3_Arm(w_1, w_2, w_3, w_4, _altura){
@@ -13,7 +14,6 @@ A01633021::A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t 
 void A01633021::calculate_forward_kinematics(){
     float d1, d2, d3, d4, d5, d6;
     float angle4, angle5;
-    std::cout << "Calculating forward kinematics \n";
     float l1, l2;       //Distancia eje del punto 2 a 3 y de punto 3 a 4
     //Calcular distancia ejes
     l1 = dis_w_p3.dy - dis_w_p2.dy;
@@ -45,7 +45,6 @@ void A01633021::calculate_inverse_kinematics(){
     float l1, l2;
     float alfa;
     float x, y, z, r, b;
-    std::cout << "Calculating inverse kinematics \n";
     l1 = dis_w_p3.dy - dis_w_p2.dy;
     l2 = dis_w_p4.dy - dis_w_p3.dy;
     //Obtener referencias relativas al punto 1
@@ -79,19 +78,19 @@ void A01633021::process_trajectory(){
         //Obtener tiempo
         time =  queue_trajectory[idx].time;
         //Obtener coordenadas deseadas
-        tmp_trajectory =  queue_trajectory[idx];
+        tmp_trajectory     = queue_trajectory[idx];
         coor_end_efector.x = tmp_trajectory.coordinates.x;  
         coor_end_efector.y = tmp_trajectory.coordinates.y;
         coor_end_efector.z = tmp_trajectory.coordinates.z;
         //Aplicar cinematica inversa
-        calculate_inverse_kinematics();
+        this->calculate_inverse_kinematics();
         //Guardar coordenadas angulares calculadas
         tmp_joints.time = time;
         tmp_joints.coordinates.coordinate_join1 = coor_union1;
         tmp_joints.coordinates.coordinate_join2 = coor_union2;
         tmp_joints.coordinates.coordinate_join3 = coor_union3;
         //Calcular cinematica directa con coordenadas angulares calculadas;
-        calculate_forward_kinematics();
+        this->calculate_forward_kinematics();
         //Guardar coordenada cartesiana de efector final calculado
         tmp_efector.time = time;
         tmp_efector.coordinates.x = coor_end_efector.x;
@@ -111,6 +110,7 @@ void A01633021::process_trajectory(){
 
 bool A01633021::read_trajectory(std::string file_name){
     std::string tmp_data;
+    std::string tmp_value;
     std::ifstream rd_file(file_name);
     coordinates_time_t tmp_struct;
     //check if file is open
@@ -125,16 +125,24 @@ bool A01633021::read_trajectory(std::string file_name){
 
     while ( getline (rd_file, tmp_data)){
         std::stringstream ss(tmp_data);
-        ss >> tmp_struct.time;                      //get time from file
-        ss >> tmp_struct.coordinates.x;             //Get x from file
-        ss >> tmp_struct.coordinates.y;             //Get y from file
-        ss >> tmp_struct.coordinates.z;             //Get z from file
+        ss >> tmp_value;                      //get time from file
+        tmp_struct.time = std::stof(tmp_value);
+        ss >> tmp_value;                      //Get x from file
+        tmp_struct.coordinates.x = std::stof(tmp_value);
+        ss >> tmp_value;                       //Get y from file
+        tmp_struct.coordinates.y = std::stof(tmp_value);
+        ss >> tmp_value;                        //Get z from file
+        tmp_struct.coordinates.z = std::stof(tmp_value);
         queue_trajectory.push_back(tmp_struct);
     }
 
     rd_file.close();
 
     return true;
+}
+
+void A01633021::clear_trajectory(){
+    queue_trajectory.clear();
 }
 
 bool A01633021::write_joints(std::string file_name){
