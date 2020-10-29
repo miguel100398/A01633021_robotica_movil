@@ -42,6 +42,7 @@ void A01633021::calculate_forward_kinematics(){
 }
 */
 
+/*
 void A01633021::calculate_forward_kinematics(){
     //Declarar variables
     float ang1;
@@ -65,8 +66,8 @@ void A01633021::calculate_forward_kinematics(){
     ang1 = coor_union1;
     ang2 = coor_union2;
     ang3 = coor_union3;
-    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
-    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
+    l1 = 5;//9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 5;//14.641;//dis_w_p4.dy - dis_w_p3.dy;
     //Calcular ang4
     ang4 = ang3+0;
     ang5 = ang3 + ang2;
@@ -88,13 +89,61 @@ void A01633021::calculate_forward_kinematics(){
     //calcular r
     r = sqrt((xmax*xmax)+(zmax2*zmax2));
     //calcular x
-    coor_end_efector.x = sind(ang1)*sind(ang2)*xmax +cosd(ang2)*sind(ang1)*d4 + 2.95;
+    coor_end_efector.x = sind(ang1)*sind(ang2)*xmax +cosd(ang2)*sind(ang1)*d4;//+ 2.95;
     //calcular y
-    coor_end_efector.y = cosd(ang2)*ymax + (sind(ang1)*sind(-ang2)*d4) + dis_w_p2.dy;
+    coor_end_efector.y = cosd(ang2)*ymax + sind(-ang2)*d4; //+ dis_w_p2.dy;
     //calcualr z
-    coor_end_efector.z = cosd(ang1)*zmax + altura;
+    coor_end_efector.z = cosd(ang1)*zmax; //+ altura;
 
-    std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
+    //std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
+}
+*/
+
+void A01633021::calculate_forward_kinematics(){
+    float ang1;
+    float ang2;
+    float ang3;
+    float ang4;
+    float ang5;
+    float d1;
+    float d2;
+    float d3;
+    float d4;
+    float d5;
+    float d6;
+    float l1;
+    float l2;
+    float x;
+    float y;
+    float z;
+
+    ang1 = coor_union1;
+    ang2 = coor_union2;
+    ang3 = 180-coor_union3;
+    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
+    d2 = 0;
+
+    d3 = sind(ang2)*l1;
+    ang4 = 180 - (ang2 + 90);
+    ang5 = ang3 - ang4;
+    d6 = cosd(ang5) * l2;
+
+    z = d2 +d3 -d6;
+
+    d4 = cosd(ang2)*l1;
+    d5 = sind(ang5)*l2;
+    d1 = d4+d5;
+
+    //y = cosd(ang1)*d1;
+    x = sind(ang1)*d1;
+    y = cosd(ang1)*d1;
+
+    coor_end_efector.x = x +  dis_w_p2.dx;
+    coor_end_efector.y = y +  dis_w_p2.dy;
+    coor_end_efector.z = cosd(ang1)*z + altura;
+
+    //std::cout<< "d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: "  << d4 << " d5: " << d5 << " d6: " << d6 << " ang3: " << ang3 << " ang4 " << ang4 << " ang5 " << ang5 << "\n";
 }
 
 /*
@@ -126,6 +175,41 @@ void A01633021::calculate_inverse_kinematics(){
 */
 
 void A01633021::calculate_inverse_kinematics(){
+    float r;
+    float x;
+    float y;
+    float z;
+    float base;
+    float elbow;
+    float shoulder;
+    float l1;
+    float l2;
+
+    l1 = 9.3757+2;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 14.641+2;//dis_w_p4.dy - dis_w_p3.dy;
+
+    y = coor_end_efector.y - dis_w_p2.dy;
+    x = coor_end_efector.x - dis_w_p2.dx;
+    z = coor_end_efector.z;
+
+    r = sqrt((y*y)+(x*x)+(z*z));
+
+    if (y!=0){
+        base = atand(x/y);
+    }else{
+        base = 90;
+    }
+
+    elbow = -acosd(((r*r)-(l1*l1)-(l2*l2))/(-2*l1*l2)) + 180;
+    shoulder = asind(z/r) + atand((l2*sind(elbow))/(l1+l2*cosd(elbow)));
+
+    coor_union1 = base;
+    coor_union2 = shoulder;
+    coor_union3 = elbow;
+}
+
+/*
+void A01633021::calculate_inverse_kinematics(){
     float l1;
     float l2;
     float x;
@@ -148,42 +232,60 @@ void A01633021::calculate_inverse_kinematics(){
     float d5;
     float d6;
 
-    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
-    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
-    x = coor_end_efector.x - 2.95;
-    y = coor_end_efector.y - dis_w_p2.dy;
-    z = coor_end_efector.z - altura;
+    l1 = 5;//9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 5;//14.641;//dis_w_p4.dy - dis_w_p3.dy;
+    x = coor_end_efector.x;// - 2.95;
+    y = coor_end_efector.y;// - dis_w_p2.dy;
+    z = coor_end_efector.z;// - altura;
+
+    if ((coor_end_efector.x<0.01) && (coor_end_efector.x>=-0.01)){
+        x=z;
+    }
+
     r = sqrt((x*x)+(y*y));
 
     std::cout << "r: " << r << "\n";
     
 
-    ang1 = acosd(((x*x)+(r*r)-(y*y))/(2*x*r));
-    if (ang1 > 90){
-        ang1 = 180 - ang1;
-    }
+    ang1 = acosd(x/r);
     std::cout << "ang1: " << ang1 << "\n";
-    ang2 = acosd(((y*y)+(r*r)-(x*x))/(2*y*r));
-    if (ang2 > 90){
-        ang2 = 180 - ang2;
+    ang2 = acosd(y/r);
+    if (x<0){
+        ang2 = -ang2;
     }
     std::cout << "ang2: " << ang2 << "\n";
-    ang3 = acosd(((l1*l1)+(r*r)-(l2*l2))/(2*l1*r));
+    if (ang1==90){
+        ang3 = 0;
+    } else {
+        ang3 = acosd(((l1*l1)+(r*r)-(l2*l2))/(2*l1*r));
+    }
     std::cout << "ang3: " << ang3 << "\n";
-    ang4 = acosd(((l2*l2)+(r*r)-(l1*l1))/(2*l2*r));
+    if (ang2==90){
+        ang4 = 0;
+    }
+    else {
+        ang4 = acosd(((l2*l2)+(r*r)-(l1*l1))/(2*l2*r));
+    }
+    if (x<0){
+        ang4 = -ang4;
+    }
     std::cout << "ang4: " << ang4 << "\n";
     ang5 = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l2*l1));
     std::cout << "ang5: " << ang5 << "\n";
-    if ((y>=0) && (x>=0)){
+    if ((y>=0) && (x>=0)){                      //Cuadrante 1
         ang6 = 90 - ang1 - ang3;
-        std::cout << "ang6: " << ang6 << "\n";
         ang7 = 90 - ang2 - ang4;
-        std::cout << "ang7: " << ang7 << "\n";
-    }else{
-        ang6 = 180 - ang1 - ang4;
-        std::cout << "ang6: " << ang6 << "\n";
-        ang7 = 180 - ang2 - ang3;
-        std::cout << "ang7: " << ang7 << "\n";
+    }
+    else if (y>=0 && x<=0){                     //Cuadrante 2
+        ang6 = ang1-90 + abs(ang3);
+        ang7 = ang2-90 + abs(ang4);
+    }
+    else if (y<=0 && x<=0){                      //Cuadrantr 3
+        ang6 = 180 - ang1 - ang3;
+        ang7 = 180 - ang2 - ang4;
+    } else{                                     //Cuadrante4
+        ang6 = 180 - ang1 - ang3;
+        ang7 = 180 - ang2 - ang4;
     }
     if (ang6 >90){
         ang6 = 180 - ang6;
@@ -191,6 +293,9 @@ void A01633021::calculate_inverse_kinematics(){
     if (x<0){
         ang6 = -ang6;
     }
+    std::cout << "ang6: " << ang6 << "\n";
+    std::cout << "ang7: " << ang7 << "\n";
+
 
     d1 = y * tand(ang6);
     std::cout << "d1: " << d1<< "\n";
@@ -213,15 +318,31 @@ void A01633021::calculate_inverse_kinematics(){
     std::cout << "d6: " << d6 << "\n";
 
     if (d6==0){
-        ang9 = acosd(0);
+        if (x==0 && y==0){
+            ang9 = acosd(z/(l1+l2));
+        } else{
+            ang9 = 90;
+        }
     } else{
         ang9 = acosd(z/d6);
     }
+
+    if ((coor_end_efector.x<0.01) && (coor_end_efector.x>=-0.01)){
+        std::cout << "Estoy aqui1\n";
+        ang9 = 0;
+        if (y<0.01 && y>=-0.01){
+            std::cout << "Estoy aqui2\n";
+            ang8 = 0;
+            ang6 = 90 - acosd(z/(l1+l2));
+        }
+    }
+
 
     coor_union1 = ang9;
     coor_union2 = ang6;
     coor_union3 = ang8;
 }
+*/
 
 void A01633021::process_trajectory(){
     float time;
