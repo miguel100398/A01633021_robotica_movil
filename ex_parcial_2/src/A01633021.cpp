@@ -10,7 +10,7 @@ A01633021::A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t 
 }
 
 
-
+/*
 void A01633021::calculate_forward_kinematics(){
     float d1, d2, d3, d4, d5, d6;
     float angle4, angle5;
@@ -39,6 +39,60 @@ void A01633021::calculate_forward_kinematics(){
     coor_end_efector.x = (sind(coor_union1)*d1); //+ dis_w_p2.dx;
     coor_end_efector.y = cosd(coor_union1)*d1; //+ dis_w_p2.dy;
     //Calcular coordenadas de uniones
+}
+*/
+
+void A01633021::calculate_forward_kinematics(){
+    //Declarar variables
+    float ang1;
+    float ang2;
+    float ang3;
+    float ang4;
+    float ang5;
+    float l1;
+    float l2;
+    float zmax;
+    float ymax;
+    float xmax;
+    float d1;
+    float d2;
+    float d3;
+    float d4;
+    float d5;
+    float r;
+    //Datos conocidos
+    ang1 = coor_union1;
+    ang2 = coor_union2;
+    ang3 = coor_union3;
+    l1   = 5;
+    l2   = 5;
+    //Calcular ang4
+    ang4 = ang3+0;
+    ang5 = ang3 + ang2;
+    //Calcular d1
+    d1 = cosd(0)*l1;
+    //Calcular d2
+    d2 = sind(0)*l1;
+    //calcular d3
+    d3 = cosd(ang4)*l2;
+    //calcular d4
+    d4 = sind(ang4)*l2;
+    d5 = sind(ang5)*l2;
+    //calcular zmax
+    zmax = sind(ang2)*l1+d5;
+    //calcular xmax y ymax
+    xmax = d1+d3;
+    ymax = d1+d3;
+    //calcular r
+    r = sqrt((xmax*xmax)+(zmax*zmax));
+    //calcular x
+    coor_end_efector.x = sind(ang2)*d4;
+    //calcular y
+    coor_end_efector.y = cosd(ang2)*ymax + (sind(ang1)*sind(-ang2)*d4);
+    //calcualr z
+    coor_end_efector.z = cosd(ang1)*zmax;
+
+    std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
 }
 
 void A01633021::calculate_inverse_kinematics(){

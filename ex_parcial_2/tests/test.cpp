@@ -5,7 +5,7 @@
 
 void test_point(A01633021 *robot, float coor1, float coor2, float coor3){
     robot->set_coor_union1(coor1);
-    robot->set_coor_union2(coor2+180);
+    robot->set_coor_union2(coor2);
     robot->set_coor_union3(coor3);
     //robot->set_coor_end_efector(coor);
     robot->calculate_forward_kinematics();
@@ -20,11 +20,11 @@ int main(){
     distance_t w_3 = {.dx=-1.161, .dy=17.89, .dz=0.9796, .dist=17.989};
     distance_t w_4 = {.dx=-3.95, .dy=32.541, .dz=-13.153, .dist=32.8062};
     A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 0);
-    test_point(robot, 90, 0, -90);
-    test_point(robot, 90, 0, -45);
-    test_point(robot, 90, 0, 0);
-    test_point(robot, 90, 0, 45);
-    test_point(robot, 90, 0,90);
+    test_point(robot, 0, -90, 0);
+    test_point(robot, 0, -45, 0);
+    test_point(robot, 0, 0, 0);
+    test_point(robot, 0, 45, 0);
+    test_point(robot, 0, 90, 0);
     return 0;
 }
 
