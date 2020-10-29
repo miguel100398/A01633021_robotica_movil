@@ -20,11 +20,13 @@ int main(){
     distance_t w_3 = {.dx=-1.161, .dy=17.89, .dz=0.9796, .dist=17.989};
     distance_t w_4 = {.dx=-3.95, .dy=32.541, .dz=-13.153, .dist=32.8062};
     A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 0);
-    test_point(robot, 0, -90, 0);
-    test_point(robot, 0, -45, 0);
-    test_point(robot, 0, 0, 0);
-    test_point(robot, 0, 45, 0);
-    test_point(robot, 0, 90, 0);
+    test_point(robot, 90, -90, 90);
+    robot->calculate_inverse_kinematics();
+    std::cout << "1: " << robot->get_coor_union1() << " 2: " << robot->get_coor_union2() << " 3: " << robot->get_coor_union3() << "\n";
+    test_point(robot, 90, -45, 90);
+    test_point(robot, 90, 0,  90);
+    test_point(robot, 90, 45, 90);
+    test_point(robot, 90, 90, 90);
     return 0;
 }
 

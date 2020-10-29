@@ -56,6 +56,7 @@ class A01633021 : public OP3_Arm{
         //Funciones auxiliares para calcular seno, coseno y sus inversos en grados
         double sind(float degree);      
         double cosd(float degree);
+        double tand(float degree);
         double asind(float value);
         double acosd(float value);
         double atand(float value);

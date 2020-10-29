@@ -97,6 +97,7 @@ void A01633021::calculate_forward_kinematics(){
     //std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
 }
 
+/*
 void A01633021::calculate_inverse_kinematics(){
     float l1, l2;
     float alfa;
@@ -121,6 +122,60 @@ void A01633021::calculate_inverse_kinematics(){
     coor_union2 = acosd(((r*r)+(l1*l1)-(l2*l2))/(2*l1*r))+alfa;
     //Obtener angulo de union 3 por teorema de coseno
     coor_union3 = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l1*l2));
+}
+*/
+
+void A01633021::calculate_inverse_kinematics(){
+    float l1;
+    float l2;
+    float x;
+    float y;
+    float z;
+    float r;
+    float ang1;
+    float ang2;
+    float ang3;
+    float ang4;
+    float ang5;
+    float ang6;
+    float ang7;
+    float ang8;
+    float ang9;
+    float d1;
+    float d2;
+    float d3;
+    float d4;
+    float d5;
+    float d6;
+
+    l1=5;
+    l2=5;
+    x = coor_end_efector.x;
+    y = coor_end_efector.y;
+    z = coor_end_efector.z;
+    r = sqrt((x*x)+(y*y)+(z*z));
+    
+    ang1 = acosd(((x*x)+(r*r)-(y*y))/(2*x*r));
+    ang2 = acosd(((y*y)+(r*r)-(x*x))/(2*y*r));
+    ang3 = acosd(((l1*l1)+(r*r)-(l2*l2))/(2*l1*r));
+    ang4 = acosd(((l2*l2)+(r*r)-(l1*l1))/(2*l2*r));
+    ang5 = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l2*l1));
+    ang6 = 180 - ang1 - ang3;
+    ang7 = 180 - ang2 - ang4;
+
+    d1 = y * tand(ang6);
+    d2 = sqrt((y*y)+(d1*d1));
+    d3 = x - d1;
+    d4 = sqrt((l2*l2)+(d3*d3)-2*l2*d3*cos(ang7));
+    ang8 = acosd(((l2*l2)+(d4*d4)-(d3*d3))/(2*l2*d4));
+    d5 = sind(ang6)*d4;
+    d6 = d3+d5;
+
+    ang9 = acosd(z/d6);
+
+    coor_union1 = ang9;
+    coor_union2 = ang6;
+    coor_union3 = ang8;
 }
 
 void A01633021::process_trajectory(){
@@ -223,6 +278,10 @@ bool A01633021::write_joints(std::string file_name){
 
     wr_file.close();
     return true;
+}
+
+double A01633021::tand(float degree){
+    return tan(degree*PI/180);
 }
 
 bool A01633021::write_efector(std::string file_name){
