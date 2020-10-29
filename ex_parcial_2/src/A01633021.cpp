@@ -52,6 +52,7 @@ void A01633021::calculate_forward_kinematics(){
     float l1;
     float l2;
     float zmax;
+    float zmax2;
     float ymax;
     float xmax;
     float d1;
@@ -80,19 +81,20 @@ void A01633021::calculate_forward_kinematics(){
     d5 = sind(ang5)*l2;
     //calcular zmax
     zmax = sind(ang2)*l1+d5;
+    zmax2 = sind(0)*l1+d4;
     //calcular xmax y ymax
     xmax = d1+d3;
     ymax = d1+d3;
     //calcular r
-    r = sqrt((xmax*xmax)+(zmax*zmax));
+    r = sqrt((xmax*xmax)+(zmax2*zmax2));
     //calcular x
-    coor_end_efector.x = sind(ang2)*d4;
+    coor_end_efector.x = sind(ang1)*sind(ang2)*xmax +cosd(ang2)*d4;
     //calcular y
     coor_end_efector.y = cosd(ang2)*ymax + (sind(ang1)*sind(-ang2)*d4);
     //calcualr z
     coor_end_efector.z = cosd(ang1)*zmax;
 
-    std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
+    //std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
 }
 
 void A01633021::calculate_inverse_kinematics(){
