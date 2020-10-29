@@ -65,8 +65,8 @@ void A01633021::calculate_forward_kinematics(){
     ang1 = coor_union1;
     ang2 = coor_union2;
     ang3 = coor_union3;
-    l1   = 5;
-    l2   = 5;
+    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
     //Calcular ang4
     ang4 = ang3+0;
     ang5 = ang3 + ang2;
@@ -88,13 +88,13 @@ void A01633021::calculate_forward_kinematics(){
     //calcular r
     r = sqrt((xmax*xmax)+(zmax2*zmax2));
     //calcular x
-    coor_end_efector.x = sind(ang1)*sind(ang2)*xmax +cosd(ang2)*d4;
+    coor_end_efector.x = sind(ang1)*sind(ang2)*xmax +cosd(ang2)*sind(ang1)*d4 + 2.95;
     //calcular y
-    coor_end_efector.y = cosd(ang2)*ymax + (sind(ang1)*sind(-ang2)*d4);
+    coor_end_efector.y = cosd(ang2)*ymax + (sind(ang1)*sind(-ang2)*d4) + dis_w_p2.dy;
     //calcualr z
-    coor_end_efector.z = cosd(ang1)*zmax;
+    coor_end_efector.z = cosd(ang1)*zmax + altura;
 
-    //std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
+    std::cout<< "ang4: " << ang4 << " d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: " << d4 << " xmax: " << xmax << " ymax: " << ymax << " zmax: " << zmax << " r: " << r << "\n";
 }
 
 /*
@@ -148,30 +148,75 @@ void A01633021::calculate_inverse_kinematics(){
     float d5;
     float d6;
 
-    l1=5;
-    l2=5;
-    x = coor_end_efector.x;
-    y = coor_end_efector.y;
-    z = coor_end_efector.z;
-    r = sqrt((x*x)+(y*y)+(z*z));
+    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
+    x = coor_end_efector.x - 2.95;
+    y = coor_end_efector.y - dis_w_p2.dy;
+    z = coor_end_efector.z - altura;
+    r = sqrt((x*x)+(y*y));
+
+    std::cout << "r: " << r << "\n";
     
+
     ang1 = acosd(((x*x)+(r*r)-(y*y))/(2*x*r));
+    if (ang1 > 90){
+        ang1 = 180 - ang1;
+    }
+    std::cout << "ang1: " << ang1 << "\n";
     ang2 = acosd(((y*y)+(r*r)-(x*x))/(2*y*r));
+    if (ang2 > 90){
+        ang2 = 180 - ang2;
+    }
+    std::cout << "ang2: " << ang2 << "\n";
     ang3 = acosd(((l1*l1)+(r*r)-(l2*l2))/(2*l1*r));
+    std::cout << "ang3: " << ang3 << "\n";
     ang4 = acosd(((l2*l2)+(r*r)-(l1*l1))/(2*l2*r));
+    std::cout << "ang4: " << ang4 << "\n";
     ang5 = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l2*l1));
-    ang6 = 180 - ang1 - ang3;
-    ang7 = 180 - ang2 - ang4;
+    std::cout << "ang5: " << ang5 << "\n";
+    if ((y>=0) && (x>=0)){
+        ang6 = 90 - ang1 - ang3;
+        std::cout << "ang6: " << ang6 << "\n";
+        ang7 = 90 - ang2 - ang4;
+        std::cout << "ang7: " << ang7 << "\n";
+    }else{
+        ang6 = 180 - ang1 - ang4;
+        std::cout << "ang6: " << ang6 << "\n";
+        ang7 = 180 - ang2 - ang3;
+        std::cout << "ang7: " << ang7 << "\n";
+    }
+    if (ang6 >90){
+        ang6 = 180 - ang6;
+    }
+    if (x<0){
+        ang6 = -ang6;
+    }
 
     d1 = y * tand(ang6);
+    std::cout << "d1: " << d1<< "\n";
     d2 = sqrt((y*y)+(d1*d1));
+    std::cout << "d2: " << d2 << "\n";
     d3 = x - d1;
+    std::cout << "d3: " << d3 << "\n";
     d4 = sqrt((l2*l2)+(d3*d3)-2*l2*d3*cos(ang7));
-    ang8 = acosd(((l2*l2)+(d4*d4)-(d3*d3))/(2*l2*d4));
-    d5 = sind(ang6)*d4;
-    d6 = d3+d5;
+    std::cout << "d4: " << d4 << "\n";
+    if (d4 != 0){
+        ang8 = acosd(((l2*l2)+(d4*d4)-(d3*d3))/(2*l2*d4));
+    } 
 
-    ang9 = acosd(z/d6);
+    ang8 = 180-ang5;
+
+    std::cout << "ang8: " << ang8 << "\n";
+    d5 = sind(ang6)*d4;
+    std::cout << "d5: " << d5 << "\n";
+    d6 = d3+d5;
+    std::cout << "d6: " << d6 << "\n";
+
+    if (d6==0){
+        ang9 = acosd(0);
+    } else{
+        ang9 = acosd(z/d6);
+    }
 
     coor_union1 = ang9;
     coor_union2 = ang6;
