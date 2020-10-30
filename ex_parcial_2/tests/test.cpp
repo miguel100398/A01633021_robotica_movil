@@ -3,6 +3,14 @@
 
 #include "../include/A01633021.hpp"
 
+#define num_tests 10
+#define altura 1.357
+#define brazo 9.3757
+#define antebrazo 14.641
+#define incx -1.161
+#define incy 8.85
+#define total brazo+antebrazo
+
 void test_point(A01633021 *robot, float coor1, float coor2, float coor3){
     robot->set_coor_union1(coor1);
     robot->set_coor_union2(coor2);
@@ -33,16 +41,37 @@ void test_direct(A01633021 *robot){
 int main(){
     coordinates_t err {.x=0, .y=0, .z=0};
     coordinates_t coor {.x=3.001, .y=4.001, .z=5.001};
-    float test_x[13] = {18.1, 3.95, 19.93, 16.9, 14.6, 18.5, 6.42, 12.3, 3.95, 3.95, 10.2, 11.6, 25.3};
-    float test_y[13] = {15.5, 32.54, 5.126, 3.7, 9.37, 18.2, 23.49, 5.79, 9.19, 1.26, 28, 28.3, 29.5};
-    float test_z[13] = {14.1, 1.3153, 0.304, 2.3, 2.34, 0.304, 0.304, 0.304, 22.72, 18.6, 10.9, 10.5, 0.3};
+    
+    float test_x[num_tests] = {0+incx,           0+incx,         0+incx,                 0+incx,            total+incx,       0+incx,                 -total+incx,   7,   7,     -7  };
+    float test_y[num_tests] = {0+incy,           total+incy,     total*0.707+incy,       0+incy,            0+incy,           total+incy,             0+incy,        15,  15,    15};
+    float test_z[num_tests] = {total+altura,     0+altura,       -total*0.707+altura,    -total+altura,     0+altura,         0*0.707+altura,         0+altura,        7,  -7,   7};
+    
+    //Tests midiendo como referencia el punto 2 y longitudes de 5 y 5 cm
+    //Testeo horizontal
+    /*
+    float test_x[num_tests] = {10,   5,      0,  -7.07,      -10};
+    float test_y[num_tests] = {0,   6.5,   10, 7.07,   0};
+    float test_z[num_tests] = {0,  0,   0,  0, 0};
+    */
+    //Testeo vertical
+    /*
+    float test_x[num_tests] = {0,   0,      0,  0,      0};
+    float test_y[num_tests] = {0,   7.07,   10, 7.07,   0};
+    float test_z[num_tests] = {10,  7.07,   0,  -0.707, -10};
+    */
+    //Testeo diagonal
+    /*
+    float test_x[num_tests] = {0,   3,      7.07,  -3,      0};
+    float test_y[num_tests] = {0,   3,   7.07, 3,   0};
+    float test_z[num_tests] = {10,  7.07,   0,  -0.707, -10};
+    */
     distance_t w_1 = {.dx=-3.95, .dy=6.44, .dz=0.0304, .dist=7.5549};
     distance_t w_2 = {.dx=-1.161, .dy=8.85, .dz=0.9696, .dist=9.0474};
     distance_t w_3 = {.dx=-1.161, .dy=17.89, .dz=0.9796, .dist=17.989};
     distance_t w_4 = {.dx=3.95, .dy=32.541, .dz=-13.153, .dist=32.8062};
     A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 1.357);
     
-    for (int idx=0; idx<12; idx++){
+    for (int idx=0; idx<num_tests; idx++){
         std::cout << "Point " << idx << "\n";
         test_point_inverse(robot, test_x[idx], test_y[idx], test_z[idx]);
         test_direct(robot);
@@ -53,9 +82,9 @@ int main(){
     }
     
     std::cout << "Error promedio \n";
-    std::cout << "x: " << err.x/12 << "\n";
-    std::cout << "y: " << err.y/12 << "\n";
-    std::cout << "z: " << err.z/12 << "\n";
+    std::cout << "x: " << err.x/num_tests << "\n";
+    std::cout << "y: " << err.y/num_tests << "\n";
+    std::cout << "z: " << err.z/num_tests << "\n";
 
     return 0;
 }

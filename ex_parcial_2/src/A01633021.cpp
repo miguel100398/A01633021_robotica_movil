@@ -124,10 +124,13 @@ void A01633021::calculate_forward_kinematics(){
     l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
     d2 = 0;
 
+
+
     d3 = sind(ang2)*l1;
     ang4 = 180 - (ang2 + 90);
     ang5 = ang3 - ang4;
     d6 = cosd(ang5) * l2;
+
 
     z = d2 +d3 -d6;
 
@@ -135,13 +138,20 @@ void A01633021::calculate_forward_kinematics(){
     d5 = sind(ang5)*l2;
     d1 = d4+d5;
 
-    //y = cosd(ang1)*d1;
-    x = sind(ang1)*d1;
-    y = cosd(ang1)*d1;
+    if (ang1==90){      //Plano horizontal
+        x = z;
+        y = d1;
+        z = 0;
+    }else{
+        x = sind(ang1)*d1;
+        y = cosd(ang1)*d1;
+    }
 
-    coor_end_efector.x = x +  dis_w_p2.dx;
-    coor_end_efector.y = y +  dis_w_p2.dy;
-    coor_end_efector.z = cosd(ang1)*z + altura;
+    
+
+    coor_end_efector.x = x + dis_w_p2.dx;
+    coor_end_efector.y = y + dis_w_p2.dy;
+    coor_end_efector.z = z + altura;
 
     //std::cout<< "d1: " << d1 << " d2: " << d2 << " d3: " << d3 << " d4: "  << d4 << " d5: " << d5 << " d6: " << d6 << " ang3: " << ang3 << " ang4 " << ang4 << " ang5 " << ang5 << "\n";
 }
@@ -184,28 +194,47 @@ void A01633021::calculate_inverse_kinematics(){
     float shoulder;
     float l1;
     float l2;
+    float beta;
+    float alfa;
+    float gama;
 
-    l1 = 9.3757+2;//dis_w_p3.dy - dis_w_p2.dy;
-    l2 = 14.641+2;//dis_w_p4.dy - dis_w_p3.dy;
-
+    l1 = 9.3757;//dis_w_p3.dy - dis_w_p2.dy;
+    l2 = 14.641;//dis_w_p4.dy - dis_w_p3.dy;
+ 
     y = coor_end_efector.y - dis_w_p2.dy;
     x = coor_end_efector.x - dis_w_p2.dx;
-    z = coor_end_efector.z;
+    z = coor_end_efector.z - altura;
 
     r = sqrt((y*y)+(x*x)+(z*z));
 
+
     if (y!=0){
         base = atand(x/y);
+    }else if (x!=0){
+        base = 90;
     }else{
+        base = 0;
+    }
+
+    if (z==0){          //Plano horizontal
+        z = x;
         base = 90;
     }
 
-    elbow = -acosd(((r*r)-(l1*l1)-(l2*l2))/(-2*l1*l2)) + 180;
-    shoulder = asind(z/r) + atand((l2*sind(elbow))/(l1+l2*cosd(elbow)));
+    alfa = asind(z/r);
+    beta = acosd(((r*r)+(l1*l1)-(l2*l2))/(2*r*l1));
+    gama = acosd(((l2*l2)+(l1*l1)-(r*r))/(2*l2*l1));
+
+    elbow = 180-gama;
+    //elbow = -acosd(((r*r)-(l1*l1)-(l2*l2))/(-2*l1*l2)) + 180;
+    //shoulder = alfa + atand((l2*sind(elbow))/(l1+l2*cosd(elbow)));
+    shoulder = alfa + beta;
+
 
     coor_union1 = base;
     coor_union2 = shoulder;
     coor_union3 = elbow;
+
 }
 
 /*
