@@ -42,6 +42,14 @@ void OP3_Arm::set_altura(float _altura){
     altura = _altura;
 }
 
+void OP3_Arm::set_brazo(float _brazo){
+    brazo = _brazo;
+}
+
+void OP3_Arm::set_antebrazo(float _antebrazo){
+    antebrazo = _antebrazo;
+}
+
 distance_t OP3_Arm::get_dis_w_p1(){
     return dis_w_p1;
 }
@@ -60,6 +68,14 @@ distance_t OP3_Arm::get_dis_w_p4(){
 
 float OP3_Arm::get_altura(){
     return altura;
+}
+
+float OP3_Arm::get_brazo(){
+    return brazo;
+}
+
+float OP3_Arm::get_antebrazo(){
+    return antebrazo;
 }
 
 void OP3_Arm::set_coor_end_efector(coordinates_t _coor_end_efector){

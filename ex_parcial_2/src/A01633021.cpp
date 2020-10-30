@@ -6,11 +6,12 @@
 
 
 A01633021::A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t w_4, float _altura, float _l1, float _l2) : OP3_Arm(w_1, w_2, w_3, w_4, _altura, _l1, _l2){
-
+    //Constructor
 }
 
 
 void A01633021::calculate_forward_kinematics(){
+    //Declarar variables
     float ang1;
     float ang2;
     float ang3;
@@ -28,6 +29,7 @@ void A01633021::calculate_forward_kinematics(){
     float y;
     float z;
 
+    //Inicializar variables conocidas
     ang1 = coor_union1;
     ang2 = coor_union2;
     ang3 = 180-coor_union3;
@@ -36,13 +38,16 @@ void A01633021::calculate_forward_kinematics(){
     d2 = 0;
 
 
-
+    //Encontrar d3 con trignonometria
     d3 = sind(ang2)*l1;
+    // Encontrar ang 4 utilizando los otros 2 angulos del triangulo
     ang4 = 180 - (ang2 + 90);
+    //Encontrar ANG utilizando el complemento de ANG4
     ang5 = ang3 - ang4;
+    //Encontrar D6 cin trigonometria
     d6 = cosd(ang5) * l2;
 
-
+    //Encontrar Z sumando las distancias encontradas previamente
     z = d2 +d3 -d6;
 
     d4 = cosd(ang2)*l1;
@@ -54,12 +59,12 @@ void A01633021::calculate_forward_kinematics(){
         y = d1;
         z = 0;
     }else{
-        x = sind(ang1)*d1;
+        x = sind(ang1)*d1;  //Plano XY
         y = cosd(ang1)*d1;
     }
 
     
-
+    // Agregar distancia de W con union 2
     coor_end_efector.x = x + dis_w_p2.dx;
     coor_end_efector.y = y + dis_w_p2.dy;
     coor_end_efector.z = z + altura;
@@ -69,6 +74,7 @@ void A01633021::calculate_forward_kinematics(){
 
 
 void A01633021::calculate_inverse_kinematics(){
+    //Definir variables
     float r;
     float x;
     float y;
@@ -82,6 +88,7 @@ void A01633021::calculate_inverse_kinematics(){
     float alfa;
     float gama;
 
+    //Valores conocidos
     l1 = brazo;
     l2 = antebrazo;
  
@@ -89,9 +96,10 @@ void A01633021::calculate_inverse_kinematics(){
     x = coor_end_efector.x - dis_w_p2.dx;
     z = coor_end_efector.z - altura;
 
+    //Radio del sistema
     r = sqrt((y*y)+(x*x)+(z*z));
 
-
+    //Evitar indeterminaciones de atan
     if (y!=0){
         base = atand(x/y);
     }else if (x!=0){
@@ -222,9 +230,6 @@ bool A01633021::write_joints(std::string file_name){
     return true;
 }
 
-double A01633021::tand(float degree){
-    return tan(degree*PI/180);
-}
 
 bool A01633021::write_efector(std::string file_name){
     std::ofstream wr_file(file_name);
@@ -280,6 +285,10 @@ double A01633021::sind(float degree){
 
 double A01633021::cosd(float degree){
     return cos(degree*PI/180);
+}
+
+double A01633021::tand(float degree){
+    return tan(degree*PI/180);
 }
 
 double A01633021::asind(float value){
