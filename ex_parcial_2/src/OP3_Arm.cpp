@@ -7,13 +7,15 @@ OP3_Arm::OP3_Arm(){
     //Constructor default no hacer nada
 }
 
-OP3_Arm::OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, distance_t _dis_w_p4, float _altura){
+OP3_Arm::OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, distance_t _dis_w_p4, float _altura, float _l1, float _l2){
     //Inicializar parametros constantes
     dis_w_p1 = _dis_w_p1;
     dis_w_p2 = _dis_w_p2;
     dis_w_p3 = _dis_w_p3;
     dis_w_p4 = _dis_w_p4;
     altura = _altura;
+    brazo = _l1;
+    antebrazo = _l2;
 }
 
 OP3_Arm::~OP3_Arm(){

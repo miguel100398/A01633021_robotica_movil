@@ -69,7 +69,7 @@ int main(){
     distance_t w_2 = {.dx=-1.161, .dy=8.85, .dz=0.9696, .dist=9.0474};
     distance_t w_3 = {.dx=-1.161, .dy=17.89, .dz=0.9796, .dist=17.989};
     distance_t w_4 = {.dx=3.95, .dy=32.541, .dz=-13.153, .dist=32.8062};
-    A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 1.357);
+    A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, altura, brazo, antebrazo);
     
     for (int idx=0; idx<num_tests; idx++){
         std::cout << "Point " << idx << "\n";

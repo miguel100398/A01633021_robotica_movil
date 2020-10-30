@@ -35,7 +35,7 @@ class A01633021 : public OP3_Arm{
         std::deque<coordinates_time_t> queue_error;            //queue para guardar error de coordenadas 
     public:
         //Sobre escribir metodos
-        A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t w_4, float _altura);
+        A01633021(distance_t w_1, distance_t w_2, distance_t w_3, distance_t w_4, float _altura, float _l1, float _l2);
         void calculate_forward_kinematics();
         void calculate_inverse_kinematics();
         //Leer trayectoria de archivo de texto para guardarlo en queue

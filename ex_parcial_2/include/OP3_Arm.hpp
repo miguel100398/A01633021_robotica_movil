@@ -26,10 +26,12 @@ class OP3_Arm {
         distance_t dis_w_p3;                //Distancia del punto w a punto 3
         distance_t dis_w_p4;                //Distancia del punto w a punto 4
         float altura;
+        float brazo;                           //Longitud brazo
+        float antebrazo;                       //Longitud antebrazo
 
     public:
         OP3_Arm();      //Constructor default
-        OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, distance_t _dis_w_p4, float _altura);  //Constructor indicando parametros constantes
+        OP3_Arm(distance_t _dis_w_p1, distance_t _dis_w_p2, distance_t _dis_w_p3, distance_t _dis_w_p4, float _altura, float _l1, float _l2);  //Constructor indicando parametros constantes
         ~OP3_Arm();     //Destructor
         //Setters parametros constantes
         void set_dis_w_p1(distance_t _dis_w_p1);    

@@ -9,6 +9,10 @@
 //Tiempo de simulacion de trayectorias
 #define time_s 3
 
+#define altura 1.357
+#define brazo 9.3757
+#define antebrazo 14.641
+
 int main(){
     float x0 = 3;
     float y0 = 4;
@@ -124,7 +128,7 @@ int main(){
     }
     wr_file.close();
     std::cout << "Creating robot with parameters\n";
-    A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, 7);
+    A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, altura, brazo, antebrazo);
     
     //Process trajectories
     for (int idx=0; idx<5; idx++){
