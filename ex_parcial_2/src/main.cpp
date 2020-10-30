@@ -63,7 +63,7 @@ int main(){
     //header
     wr_file << "time, \tx, \ty, \tz\n";
     for (float t=0; t<time_s; t+=time_m){
-        //Recta
+        //parabola
         coor_tmp.time = t;
         coor_tmp.coordinates.x = x0;
         coor_tmp.coordinates.y = y0+t;
@@ -82,7 +82,7 @@ int main(){
     //header
     wr_file << "time, \tx, \ty, \tz\n";
     for (float t=0; t<time_s; t+=time_m){
-        //Recta
+        //elipse
         coor_tmp.time = t;
         coor_tmp.coordinates.x = x0;
         coor_tmp.coordinates.y = y0 + 2*cos(t);
@@ -101,12 +101,13 @@ int main(){
     //header
     wr_file << "time, \tx, \ty, \tz\n";
     for (float t=0; t<time_s; t+=time_m){
-        //Recta
-        coor_tmp.time = t;
+        float delta_t = 2;
+        //Espiral:: Ignorar primeros 130ms, funcion tiende a infinito al inicio
+        coor_tmp.time = t+delta_t;
         coor_tmp.coordinates.x = x0;
-        coor_tmp.coordinates.y = 2 *(cos(t)/t);
-        coor_tmp.coordinates.z = 2 *(sin(t)/t);
-        wr_file << t << ", " << coor_tmp.coordinates.x << ", " << coor_tmp.coordinates.y << ", " << coor_tmp.coordinates.z <<"\n";
+        coor_tmp.coordinates.y = y0 + 2 *(cos(t+delta_t)/t+delta_t);
+        coor_tmp.coordinates.z = z0 + 2 *(sin(t+delta_t)/t+delta_t);
+        wr_file << coor_tmp.time << ", " << coor_tmp.coordinates.x << ", " << coor_tmp.coordinates.y << ", " << coor_tmp.coordinates.z <<"\n";
     }
     wr_file.close();
     //secuencia 5 hiperbola
