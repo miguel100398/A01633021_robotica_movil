@@ -11,3 +11,11 @@ src/A01633021.cpp
 src/main.cpp
 )
 
+add_executable(build/test_exe 
+include/OP3_Arm.hpp
+include/A01633021.hpp
+src/OP3_Arm.cpp
+src/A01633021.cpp 
+tests/test.cpp
+)
+

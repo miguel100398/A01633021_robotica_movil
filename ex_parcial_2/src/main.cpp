@@ -124,8 +124,8 @@ int main(){
         //Recta
         coor_tmp.time = t;
         coor_tmp.coordinates.x = x0;
-        coor_tmp.coordinates.y = 0.5*t*t;
-        coor_tmp.coordinates.z = 0.25*t*t*t;
+        coor_tmp.coordinates.y = y0 + 0.5*t*t;
+        coor_tmp.coordinates.z = z0 + 0.25*t*t*t;
         wr_file << t << ", " << coor_tmp.coordinates.x << ", " << coor_tmp.coordinates.y << ", " << coor_tmp.coordinates.z <<"\n";
     }
     wr_file.close();
