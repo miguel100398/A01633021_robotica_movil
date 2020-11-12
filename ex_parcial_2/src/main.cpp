@@ -28,7 +28,7 @@ int main(){
     //Crear robot
     A01633021 *robot = new A01633021(w_1, w_2, w_3, w_4, altura, brazo, antebrazo);
     //Archivos para guardar datos
-    std::string trajectory_files[5]     = {"data/trajectory_1.txt", "data/trajectory_2.txt", "data/trajectory_3.txt", "data/trajectory_4.txt", "data/trajectory_5.txt"};
+    std::string trajectory_files[5]     = {"tiktok.csv", "data/trajectory_2.txt", "data/trajectory_3.txt", "data/trajectory_4.txt", "data/trajectory_5.txt"};
     std::string joints_files[5]         = {"data/joints_1.txt", "data/joints_2.txt", "data/joints_3.txt", "data/joints_4.txt", "data/joints_5.txt"};
     std::string efector_files[5]        = {"data/efector_1.txt", "data/efector_2.txt", "data/efector_3.txt", "data/efector_4.txt", "data/efector_5.txt"};
     std::string error_files[5]          = {"data/error_1.txt", "data/error_2.txt", "data/error_3.txt", "data/error_4.txt", "data/error_5.txt"};
@@ -36,6 +36,7 @@ int main(){
 
 
     //secuencia 1 Recta
+    /*
     std::cout << "Generating trajectory 1\n";
     wr_file.open(trajectory_files[0]);
     //Revisar si abrio archivo
@@ -55,6 +56,7 @@ int main(){
         
     }
     wr_file.close();
+    */
 
 
     //secuencia 2 Parabola

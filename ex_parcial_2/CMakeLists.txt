@@ -21,5 +21,9 @@ add_executable(build/test_exe
 src/test.cpp
 )
 
+add_executable(build/separar_exe
+src/separar.cpp
+)
+
 target_link_libraries(build/main_exe OP3)
 target_link_libraries(build/test_exe OP3)
