@@ -1,7 +1,7 @@
 #ifndef MAIN_CPP
 #define MAIN_CPP  
 
-#include "../include/A01633021.hpp"
+#include "A01633021.hpp"
 #include <iostream>
 
 //Tiempo de muestreo

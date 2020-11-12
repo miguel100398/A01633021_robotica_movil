@@ -1,7 +1,7 @@
 #ifndef OP3_ARM_CPP  
 #define OP3_ARM_CPP  
 
-#include "../include/OP3_Arm.hpp"
+#include "OP3_Arm.hpp"
 
 OP3_Arm::OP3_Arm(){
     //Constructor default no hacer nada
