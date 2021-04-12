@@ -1,0 +1,13 @@
+region                             subRegion                          numAnimals                         
+AB                                 Census-Agricultural-Region-5       37052                              
+ON                                 Western-Ontario-Region             34451                              
+BC                                 Thompson-Okanagan                  11672                              
+SK                                 Census-Agricultural-Region-1       9888                               
+QC                                 Monteregie                         5648                               
+MB                                 Census-Agricultural-Region-2       4629                               
+NS                                 Census-Agricultural-Region-2       1205                               
+NB                                 Census-Agricultural-Region-2       905                                
+PE                                 Census-Agricultural-Region-2       883                                
+NL                                 Census-Agricultural-Region-1       102                                
+NT                                                                    0                                  
+YT                                                                    0                                  
